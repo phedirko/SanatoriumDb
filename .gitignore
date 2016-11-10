@@ -240,3 +240,6 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/src/Sanatorium/wwwroot/lib/semantic/src
+/src/Sanatorium/wwwroot/lib/semantic/examples
+/src/Sanatorium/wwwroot/lib/semantic

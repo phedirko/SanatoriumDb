@@ -8,9 +8,10 @@ using Sanatorium.Data;
 namespace Sanatorium.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161110141715_models")]
+    partial class models
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -172,93 +173,6 @@ namespace Sanatorium.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Sanatorium.Models.Patient", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("FullName");
-
-                    b.Property<int?>("RoomId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("Patients");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.PatientBook", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Deseases");
-
-                    b.Property<string>("FullName");
-
-                    b.Property<int>("PatientId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId")
-                        .IsUnique();
-
-                    b.ToTable("PatientBooks");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.Procedure", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Name");
-
-                    b.Property<int>("Price");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Procedures");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.ProcedureFrequency", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Frequency");
-
-                    b.Property<int?>("PatientBookId");
-
-                    b.Property<int?>("PatientProcedureId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientBookId");
-
-                    b.HasIndex("PatientProcedureId");
-
-                    b.ToTable("ProceduresFrequency");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.Room", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("Capacity");
-
-                    b.Property<int>("DailyPrice");
-
-                    b.Property<int>("RoomNumber");
-
-                    b.Property<int>("StageNumber");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rooms");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRole")
@@ -294,32 +208,6 @@ namespace Sanatorium.Data.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.Patient", b =>
-                {
-                    b.HasOne("Sanatorium.Models.Room")
-                        .WithMany("Patients")
-                        .HasForeignKey("RoomId");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.PatientBook", b =>
-                {
-                    b.HasOne("Sanatorium.Models.Patient")
-                        .WithOne("Book")
-                        .HasForeignKey("Sanatorium.Models.PatientBook", "PatientId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.ProcedureFrequency", b =>
-                {
-                    b.HasOne("Sanatorium.Models.PatientBook")
-                        .WithMany("Procedures")
-                        .HasForeignKey("PatientBookId");
-
-                    b.HasOne("Sanatorium.Models.Procedure", "PatientProcedure")
-                        .WithMany()
-                        .HasForeignKey("PatientProcedureId");
                 });
         }
     }

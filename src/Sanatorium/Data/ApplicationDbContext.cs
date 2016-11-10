@@ -22,5 +22,15 @@ namespace Sanatorium.Data
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
+
+        public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<PatientBook> PatientBooks { get; set; }
+
+        public DbSet<Procedure> Procedures { get; set; }
+
+        public DbSet<ProcedureFrequency> ProceduresFrequency { get; set; }
+
+        public DbSet<Room> Rooms { get; set; }
     }
 }
