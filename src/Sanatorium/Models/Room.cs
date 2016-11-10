@@ -24,13 +24,15 @@ namespace Sanatorium.Models
 
         }
 
-        public Room(int roomNumber,int stageNumber,int capacity)
+        public Room(int roomNumber,int stageNumber,int capacity,int dailyPrice)
         {
             RoomNumber = roomNumber;
 
             StageNumber = stageNumber;
 
             Capacity = capacity;
+
+            DailyPrice = dailyPrice;
         }
     }
 }
