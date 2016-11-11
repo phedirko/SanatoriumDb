@@ -1,7 +1,8 @@
 ﻿// Write your Javascript code.
 $("#addRoomBtn").click(function () {
     $.ajax({
-        url: "../Admin/CreateRoom",
+        type : "POST",
+        url: "../Admin/AppendRoom",
         data: $("#addRoomForm").serialize(),
         success: function () {
             console.log("yep");

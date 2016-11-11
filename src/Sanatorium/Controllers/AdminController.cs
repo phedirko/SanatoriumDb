@@ -23,8 +23,8 @@ namespace Sanatorium.Controllers
             var model =await Db.Rooms.ToListAsync();
             return View(model);
         }
-
-        public async Task CreateRoom(int roomNumber,int stageNumber,int capacity,int dailyPrice)
+        [HttpPost]
+        public async Task AppendRoom(int roomNumber,int stageNumber,int capacity,int dailyPrice)
         {
             Db.Rooms.Add(new Room(roomNumber, stageNumber, capacity, dailyPrice));
 
