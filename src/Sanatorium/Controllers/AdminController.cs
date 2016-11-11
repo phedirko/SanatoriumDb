@@ -24,11 +24,14 @@ namespace Sanatorium.Controllers
             return View(model);
         }
         [HttpPost]
-        public async Task AppendRoom(int roomNumber,int stageNumber,int capacity,int dailyPrice)
+        public async Task<JsonResult> AppendRoom(int roomNumber,int stageNumber,int capacity,int dailyPrice)
         {
-            Db.Rooms.Add(new Room(roomNumber, stageNumber, capacity, dailyPrice));
+            var room = new Room(roomNumber, stageNumber, capacity, dailyPrice);
+            Db.Rooms.Add(room);
 
             await Db.SaveChangesAsync();
+
+            return Json(room);
         }
     }
 }
