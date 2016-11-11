@@ -19,3 +19,7 @@ $("#addRoomBtn").click(function () {
         }
     });
 });
+$('#test').click(function () {
+
+    $('#roomAddedDimmer').dimmer('show');
+});
