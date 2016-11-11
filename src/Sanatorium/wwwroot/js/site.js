@@ -19,7 +19,23 @@ $("#addRoomBtn").click(function () {
         }
     });
 });
-$('#test').click(function () {
+$("#addProcedureBtn").click(function () {
+    $.ajax({
+        type: "POST",
+        data: $("#addProcedureForm").serialize(),
+        url: "../Nurse/AppendProcedure/",
+        success: function (procedure) {
+            $('#procedureTableBody').append('<tr>' +
+                '<td class="collapsing">' +
+                    procedure.name+
+                '</td>' +
+                '<td class="right aligned collapsing">' +
+                procedure.price + 
+                '</td>' +
+                '<td>Какие то действия</td>' +
+                '</tr>');
 
-    $('#roomAddedDimmer').dimmer('show');
+            $('#procedureAddedDimmer').dimmer('show');
+        }
+    });
 });
