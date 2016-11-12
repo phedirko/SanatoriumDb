@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Sanatorium.Models
 {
     public class Room
     {
+        public Room()
+        {
+        }
+
+        public Room(int roomNumber, int stageNumber, int capacity, int dailyPrice)
+        {
+            RoomNumber = roomNumber;
+
+            StageNumber = stageNumber;
+
+            Capacity = capacity;
+
+            DailyPrice = dailyPrice;
+        }
+
         public int Id { get; set; }
 
         public int RoomNumber { get; set; }
@@ -17,22 +29,6 @@ namespace Sanatorium.Models
 
         public int Capacity { get; set; }
 
-        public List<Patient> Patients { get; set;}
-
-        public Room()
-        {
-
-        }
-
-        public Room(int roomNumber,int stageNumber,int capacity,int dailyPrice)
-        {
-            RoomNumber = roomNumber;
-
-            StageNumber = stageNumber;
-
-            Capacity = capacity;
-
-            DailyPrice = dailyPrice;
-        }
+        public List<Patient> Patients { get; set; }
     }
 }

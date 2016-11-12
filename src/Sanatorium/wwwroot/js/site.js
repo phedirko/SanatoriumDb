@@ -1,79 +1,126 @@
 ﻿// Write your Javascript code.
-$("#addRoomBtn").click(function () {
-    $.ajax({
-        type: "POST",
-        data: $("#addRoomForm").serialize(),
-        url: "../Admin/AppendRoom/",       
-        success: function (room) {
-            $('#roomTableBody').append('<tr>'+
-                '<td class="collapsing">Комната '+
-                    room.roomNumber+
-                '</td>'+
-                '<td>'+
-                'Этаж '+room.stageNumber+',вместимость '+room.capacity+',цена '+room.dailyPrice+
-                '</td>'+
-                '<td class="right aligned collapsing">Какие то действия</td>'+
-                '</tr>');
-            $('#tableDimmerIcon').removeClass('remove circle');
-            $('#tableDimmerIcon').addClass('add circle');
-            $('#tableDimmerText').text('Room successively added');
-            $('#tableDimmer').dimmer('show');
-        }
-    });
-});
-$("#addProcedureBtn").click(function () {
-    $.ajax({
-        type: "POST",
-        data: $("#addProcedureForm").serialize(),
-        url: "../Nurse/AppendProcedure/",
-        success: function (procedure) {
-            $('#procedureTableBody').append('<tr>' +
-                '<td class="collapsing">' +
-                    procedure.name +
-                '</td>' +
-                '<td class="right aligned collapsing">' +
-                procedure.price +
-                '</td>' +
-                '<td>Какие то действия</td>' +
-                '</tr>');
-            $('#name').val('');
-            $('#price').val('');
-            $('#procedureAddedDimmer').dimmer('show');
-        }
-    });
-});
-$('.updateBtn').click(function (e) {
-    console.log(e.target.id);
-
-});
-$('.removeBtn').click(function (e) {
-    var id = e.target.id;
-    $('#removeRoomModal')
-        .modal({
-            blurring: true
-        })
-        .modal({
-            closable: true,
-            onDeny: function () {
-                return true;
-            },
-            onApprove: function () {
-                $.ajax({
-                    type: "POST",
-                    data: {roomId:id},
-                    url: "../Admin/RemoveRoom/",
-                    success: function () {
-                        $('#Room' + id).remove();
-                        $('#tableDimmerIcon').removeClass('add circle');
-                        $('#tableDimmerIcon').addClass('remove circle');
-                        $('#tableDimmerText').text('Room successively deleted');
-                        $('#tableDimmer').dimmer('show');
-                    }
-                });               
-            }
-        })
-        .modal('setting', 'transition','vertical flip')
-        .modal('show');
+var rooms = [];
+$(document)
+    .ready(function() {
+        $.ajax({
         
-       
-});
+        });
+    });
+$("#addRoomBtn")
+    .click(function() {
+        $.ajax({
+            type: "POST",
+            data: $("#addRoomForm").serialize(),
+            url: "../Admin/AppendRoom/",
+            success: function(room) {
+                $("#roomTableBody")
+                    .append("<tr>" +
+                        '<td class="collapsing">Комната ' +
+                        room.roomNumber +
+                        "</td>" +
+                        "<td>" +
+                        "Этаж " +
+                        room.stageNumber +
+                        ",вместимость " +
+                        room.capacity +
+                        ",цена " +
+                        room.dailyPrice +
+                        "</td>" +
+                        '<td class="right aligned collapsing">Какие то действия</td>' +
+                        "</tr>");
+                $("#tableDimmerIcon").removeClass("remove circle");
+                $("#tableDimmerIcon").addClass("add circle");
+                $("#tableDimmerText").text("Room successively added");
+                $("#tableDimmer").dimmer("show");
+            }
+        });
+    });
+$("#addProcedureBtn")
+    .click(function() {
+        $.ajax({
+            type: "POST",
+            data: $("#addProcedureForm").serialize(),
+            url: "../Nurse/AppendProcedure/",
+            success: function(procedure) {
+                $("#procedureTableBody")
+                    .append("<tr>" +
+                        '<td class="collapsing">' +
+                        procedure.name +
+                        "</td>" +
+                        '<td class="right aligned collapsing">' +
+                        procedure.price +
+                        "</td>" +
+                        "<td>Какие то действия</td>" +
+                        "</tr>");
+                $("#name").val("");
+                $("#price").val("");
+                $("#procedureAddedDimmer").dimmer("show");
+            }
+        });
+    });
+$(".updateBtn")
+    .click(function(e) {
+        var id = e.target.id;
+        $("#updateRoomModal")
+            .modal({
+                blurring: true
+            })
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    $.ajax({
+                        type: "POST",
+                        data: $("#updateRoomForm").serialize(),
+                        url: "../Admin/UpdateRoom?roomId=" + id,
+                        success: function(updateRoom) {
+                            $("#tdRoomNumber" + id).text("Room " + updateRoom.roomNumber);
+                            $("#tdRoomInfo" + id)
+                                .text("Stage " +
+                                    updateRoom.stageNumber +
+                                    ",capacity " +
+                                    updateRoom.capacity +
+                                    ",daily price " +
+                                    updateRoom.dailyPrice);
+                        }
+                    });
+                }
+            })
+            .modal("setting", "transition", "vertical flip")
+            .modal("show");
+
+    });
+$(".removeBtn")
+    .click(function(e) {
+        var id = e.target.id;
+        $("#removeRoomModal")
+            .modal({
+                blurring: true
+            })
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    $.ajax({
+                        type: "POST",
+                        data: { roomId: id },
+                        url: "../Admin/RemoveRoom/",
+                        success: function() {
+                            $("#Room" + id).remove();
+                            $("#tableDimmerIcon").removeClass("add circle");
+                            $("#tableDimmerIcon").addClass("remove circle");
+                            $("#tableDimmerText").text("Room successively deleted");
+                            $("#tableDimmer").dimmer("show");
+                        }
+                    });
+                }
+            })
+            .modal("setting", "transition", "vertical flip")
+            .modal("show");
+
+
+    });

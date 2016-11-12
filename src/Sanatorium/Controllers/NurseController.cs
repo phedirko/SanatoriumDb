@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Sanatorium.Data;
 using Sanatorium.Models;
 using Sanatorium.Models.NurseViewModels;
-using Microsoft.EntityFrameworkCore;
 
 namespace Sanatorium.Controllers
 {
@@ -25,7 +22,7 @@ namespace Sanatorium.Controllers
             return View(model);
         }
 
-        public async Task<JsonResult> AppendProcedure(int price,string name)
+        public async Task<JsonResult> AppendProcedure(int price, string name)
         {
             var procedure = new Procedure(price, name);
             Db.Procedures.Add(procedure);
@@ -36,12 +33,12 @@ namespace Sanatorium.Controllers
 
         public async Task RemoveProcedure(int procedureId)
         {
-            Db.Procedures.Remove(await Db.Procedures.SingleOrDefaultAsync(p=>p.Id == procedureId));
+            Db.Procedures.Remove(await Db.Procedures.SingleOrDefaultAsync(p => p.Id == procedureId));
         }
 
-        public async Task<JsonResult> UpdateProcedure(int procedureId,int price,string name)
+        public async Task<JsonResult> UpdateProcedure(int procedureId, int price, string name)
         {
-            var procedure = await Db.Procedures.SingleOrDefaultAsync(p=>p.Id == procedureId);
+            var procedure = await Db.Procedures.SingleOrDefaultAsync(p => p.Id == procedureId);
             procedure.Name = name;
             procedure.Price = price;
 
