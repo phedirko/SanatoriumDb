@@ -6,30 +6,44 @@
 </h4>
 <div class="ui grid">
     <div class="ten wide column">
-        <table class="ui celled striped table">
-            <thead>
-                <tr>
-                    <th colspan="3">
-                        Rooms
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="roomTableBody">
-                @foreach (var room in Model)
-                {
-                <tr>
-                    <td class="collapsing">
-                        Комната @room.RoomNumber
-                    </td>
-                    <td>Этаж @room.StageNumber,вместимость @room.Capacity,цена @room.DailyPrice</td>
-                    <td class="right aligned collapsing">Какие то действия</td>
-                </tr>
-                }
-            </tbody>
-        </table>
+        <div class="ui segment">
+            <table class="ui celled striped table">
+                <thead>
+                    <tr>
+                        <th colspan="3">
+                            Rooms
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="roomTableBody">
+                    @foreach (var room in Model)
+                    {
+                        <tr id="Room@(room.Id)">
+                            <td class="collapsing">
+                                Room @room.RoomNumber
+                            </td>
+                            <td>Stage @room.StageNumber,capacity @room.Capacity,daily price @room.DailyPrice</td>
+                            <td class="right aligned collapsing">
+                                <button class="ui yellow basic button updateBtn" id="@room.Id">Update</button>
+                                <button class="ui red basic button removeBtn" id="@room.Id">Remove</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
 
+            </table>
+            <div class="ui dimmer" id="tableDimmer">
+                <div class="content">
+                    <div class="center">
+                        <h2 class="ui inverted icon header">
+                            <i class="icon" id="tableDimmerIcon"></i>
+                            <text id="tableDimmerText">Room Deleted</text>
+                        </h2>
+                    </div>
+                </div>
+            </div>
 
-
+        </div>
 
     </div>
     <div class="six wide column" align="right">
@@ -60,14 +74,22 @@
             </div>
             <br />
             <br />
-            <button class="ui primary button" id="addRoomBtn">
-                Save
+            <button class="ui basic blue button" id="addRoomBtn">
+                Create
             </button>
         </form>
     </div>
 </div>
-<div class="ui page dimmer" id="roomAddedDimmer">
+<div class="ui modal" id="removeRoomModal">
+    <i class="close icon"></i>
+    <div class="header">
+       No way out
+    </div>
     <div class="content">
-        <div class="center"><h1>Room successively added</h1></div> 
+       <h2>You remove this room forever</h2>
+    </div>
+    <div class="actions">
+        <div class="ui  basic red button cancel" id="cancel">Cancel</div>
+        <div class="ui green basic button ok" id="ok">OK</div>
     </div>
 </div>

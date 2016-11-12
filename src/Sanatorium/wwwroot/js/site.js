@@ -14,8 +14,10 @@ $("#addRoomBtn").click(function () {
                 '</td>'+
                 '<td class="right aligned collapsing">Какие то действия</td>'+
                 '</tr>');
-                
-            $('#roomAddedDimmer').dimmer('show');
+            $('#tableDimmerIcon').removeClass('remove circle');
+            $('#tableDimmerIcon').addClass('add circle');
+            $('#tableDimmerText').text('Room successively added');
+            $('#tableDimmer').dimmer('show');
         }
     });
 });
@@ -27,10 +29,10 @@ $("#addProcedureBtn").click(function () {
         success: function (procedure) {
             $('#procedureTableBody').append('<tr>' +
                 '<td class="collapsing">' +
-                    procedure.name+
+                    procedure.name +
                 '</td>' +
                 '<td class="right aligned collapsing">' +
-                procedure.price + 
+                procedure.price +
                 '</td>' +
                 '<td>Какие то действия</td>' +
                 '</tr>');
@@ -39,4 +41,39 @@ $("#addProcedureBtn").click(function () {
             $('#procedureAddedDimmer').dimmer('show');
         }
     });
+});
+$('.updateBtn').click(function (e) {
+    console.log(e.target.id);
+
+});
+$('.removeBtn').click(function (e) {
+    var id = e.target.id;
+    $('#removeRoomModal')
+        .modal({
+            blurring: true
+        })
+        .modal({
+            closable: true,
+            onDeny: function () {
+                return true;
+            },
+            onApprove: function () {
+                $.ajax({
+                    type: "POST",
+                    data: {roomId:id},
+                    url: "../Admin/RemoveRoom/",
+                    success: function () {
+                        $('#Room' + id).remove();
+                        $('#tableDimmerIcon').removeClass('add circle');
+                        $('#tableDimmerIcon').addClass('remove circle');
+                        $('#tableDimmerText').text('Room successively deleted');
+                        $('#tableDimmer').dimmer('show');
+                    }
+                });               
+            }
+        })
+        .modal('setting', 'transition','vertical flip')
+        .modal('show');
+        
+       
 });
