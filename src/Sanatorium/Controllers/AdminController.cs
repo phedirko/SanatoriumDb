@@ -33,5 +33,20 @@ namespace Sanatorium.Controllers
 
             return Json(room);
         }
+        public async Task RemoveRoom(int roomId)
+        {
+            Db.Rooms.Remove(await Db.Rooms.SingleAsync(r => r.Id == roomId));
+        }
+
+        public async Task<JsonResult> UpdateRoom(int roomId,int capacity,int dailyPrice)
+        {
+            var room =await Db.Rooms.SingleOrDefaultAsync(r=>r.Id==roomId);
+
+            room.Capacity = capacity;
+            room.DailyPrice = dailyPrice;
+
+            await Db.SaveChangesAsync();
+            return Json(room);
+        }
     }
 }

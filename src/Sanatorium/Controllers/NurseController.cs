@@ -33,5 +33,20 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return Json(procedure);
         }
+
+        public async Task RemoveProcedure(int procedureId)
+        {
+            Db.Procedures.Remove(await Db.Procedures.SingleOrDefaultAsync(p=>p.Id == procedureId));
+        }
+
+        public async Task<JsonResult> UpdateProcedure(int procedureId,int price,string name)
+        {
+            var procedure = await Db.Procedures.SingleOrDefaultAsync(p=>p.Id == procedureId);
+            procedure.Name = name;
+            procedure.Price = price;
+
+            await Db.SaveChangesAsync();
+            return Json(procedure);
+        }
     }
 }

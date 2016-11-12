@@ -34,7 +34,8 @@ $("#addProcedureBtn").click(function () {
                 '</td>' +
                 '<td>Какие то действия</td>' +
                 '</tr>');
-
+            $('#name').val('');
+            $('#price').val('');
             $('#procedureAddedDimmer').dimmer('show');
         }
     });
