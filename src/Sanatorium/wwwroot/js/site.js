@@ -4,6 +4,8 @@ var patients = [];
 $(document)
     .ready(function () {
         $('#adminRegisterGender').dropdown();
+        $('#patientsSettle').dropdown();
+        $('#roomSettle').dropdown();
         $.ajax({
             url: '../Admin/GetRooms/',
             success:function(allRooms) {
@@ -97,7 +99,7 @@ $(".updateBtn")
                     });
                 }
             })
-            .modal("setting", "transition", "vertical flip")
+            .modal("setting", "transition", "scale")
             .modal("show");
 
     });
@@ -128,6 +130,18 @@ $(".removeBtn")
                     });
                 }
             })
-            .modal("setting", "transition", "vertical flip")
+            .modal("setting", "transition", "scale")
             .modal("show");
     });
+$("#registerPatient").click(function() {
+    $.ajax({
+        type: "POST",
+        data: $("#registerPatientForm").serialize(),
+        url: "../Admin/RegisterPatient/",
+        success: function (patient) {
+            $("#fullName").val("");
+            console.log("success");
+
+        }       
+});
+});

@@ -1,8 +1,10 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Sanatorium.Data;
 using Sanatorium.Models;
+using Sanatorium.Models.AdminViewModels;
 
 namespace Sanatorium.Controllers
 {
@@ -17,7 +19,7 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = await Db.Rooms.ToListAsync();
+            var model = new IndexViewModel(await Db.Rooms.ToListAsync(),await Db.Patients.ToListAsync());
             return View(model);
         }
 
@@ -61,6 +63,11 @@ namespace Sanatorium.Controllers
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
             return Json(patient);
+        }
+
+        public async Task SettlePatients(int roomId, List<int> patientsId)
+        {
+            var x = 5;
         }
     }
 }

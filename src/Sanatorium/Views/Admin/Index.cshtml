@@ -1,4 +1,4 @@
-﻿@model List<Room>
+﻿@model Sanatorium.Models.AdminViewModels.IndexViewModel
 <br/>
 <h4 class="ui horizontal divider header">
     <i class="hotel icon"></i>
@@ -15,7 +15,7 @@
                 </tr>
                 </thead>
                 <tbody id="roomTableBody">
-                @foreach (var room in Model)
+                @foreach (var room in Model.Rooms)
                 {
                     <tr id="Room@(room.Id)">
                         <td class="collapsing" id="tdRoomNumber@(room.Id)">
@@ -84,10 +84,10 @@
 <div class="ui grid">
     <div class="eight wide column">
      
-        <form class="ui form" id="registerPatientForm">
+        <form class="ui form" id="registerPatientForm" onsubmit="return false;">
                 <div class="field eight wide">
                     <label>Full Name</label>
-                    <input type="text" placeholder="Full Name">
+                    <input type="text" placeholder="Full Name" name="fullName" id="fullName">
                 </div>
                 <div class="field eight wide">
                     <label>Gender</label>
@@ -114,6 +114,64 @@
     <i class="write icon"></i>
     Settle Patient
 </h4>
+<div class="ui grid">
+    <div class="ten wide column">
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Gender</th>
+                    <th>Is Settle</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="patientTableBody">
+                @foreach (var patient in Model.Patients)
+                {
+                    <tr id="Patient@(patient.Id)">
+                        <td>
+                            @patient.FullName
+                        </td>
+                        <td>@patient.Gender</td>
+                        <td>@patient.Gender</td>
+                        <td class="center aligned collapsed">
+                            <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
+                            <button class="ui red basic button removeBtn" id="@patient.Id">Settle</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+    <div class="six wide column" align="right">
+        <h4>Settle patients</h4>
+        <form class="ui form" id="settlePatientsForm" onsubmit="return false;">
+            <div class="field">
+
+
+                <select class="ui fluid search dropdown" multiple="" name="patientsId" id="patientsSettle">
+                    <option value="">Patients</option>
+                   @foreach (var patient in Model.Patients)
+                   {
+                       <option value="@patient.Id">@patient.FullName,@patient.Gender</option>
+                   }
+                </select>
+            </div>
+            <div class="field">
+                <select class="ui fluid search dropdown"  name="roomId" id="roomSettle">
+                    @foreach (var room in Model.Rooms)
+                    {
+                        <option value="@room.Id">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
+                    }
+                </select>
+            </div>
+            <button class="ui basic blue button" id="settlePatients">
+                Settle
+            </button>
+        </form>
+    </div>
+</div>
 <div class="ui modal" id="removeRoomModal">
     <i class="close icon"></i>
     <div class="header">
