@@ -6,7 +6,6 @@
 </h4>
 <div class="ui grid">
     <div class="twelve wide column">
-        <div class="ui segment">
             <table class="ui celled striped table">
                 <thead>
                 <tr>
@@ -43,13 +42,10 @@
                 </div>
             </div>
 
-        </div>
-
     </div>
     <div class="four wide column" align="right">
 
         <form id="addRoomForm" onsubmit="return false;">
-            <div class="ui segment">
                 <h4>Add Room</h4>
                 <div class="ui left icon input">
                     <input type="text" placeholder="Room Number" name="roomNumber" id="roomNumber">
@@ -78,11 +74,46 @@
                 <button class="ui basic blue button" id="addRoomBtn">
                     Create
                 </button>
-            </div>
         </form>
     </div>
 </div>
-
+<h4 class="ui horizontal divider header">
+    <i class="write icon"></i>
+    Register Patient
+</h4>
+<div class="ui grid">
+    <div class="eight wide column">
+     
+        <form class="ui form" id="registerPatientForm">
+                <div class="field eight wide">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="Full Name">
+                </div>
+                <div class="field eight wide">
+                    <label>Gender</label>
+                    <div class="ui selection dropdown" id="adminRegisterGender">
+                        <input type="hidden" name="gender" id="gender">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Gender</div>
+                        <div class="menu">
+                            <div class="item" data-value="Male">Male</div>
+                            <div class="item" data-value="Female">Female</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field">
+                    <br/>
+                    <button class="ui basic blue button" id="registerPatient">
+                        Register
+                    </button>
+                </div>
+        </form>
+    </div>
+</div>
+<h4 class="ui horizontal divider header">
+    <i class="write icon"></i>
+    Settle Patient
+</h4>
 <div class="ui modal" id="removeRoomModal">
     <i class="close icon"></i>
     <div class="header">

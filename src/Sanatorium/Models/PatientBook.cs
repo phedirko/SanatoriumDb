@@ -15,6 +15,11 @@ namespace Sanatorium.Models
             Deseases = deseases;
         }
 
+        public PatientBook(string fullName)
+        {
+            FullName = fullName;
+        }
+
         public PatientBook(string fullName, string deseases, List<ProcedureFrequency> procedures)
         {
             FullName = fullName;

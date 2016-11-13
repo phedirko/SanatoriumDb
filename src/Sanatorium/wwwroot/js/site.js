@@ -1,9 +1,18 @@
 ﻿// Write your Javascript code.
 var rooms = [];
+var patients = [];
 $(document)
-    .ready(function() {
+    .ready(function () {
+        $('#adminRegisterGender').dropdown();
         $.ajax({
-        
+            url: '../Admin/GetRooms/',
+            success:function(allRooms) {
+                $(allRooms)
+                    .each(function(index, element) {
+                        rooms.push(element);
+                    });
+                console.log(rooms);
+            }
         });
     });
 $("#addRoomBtn")
@@ -121,6 +130,4 @@ $(".removeBtn")
             })
             .modal("setting", "transition", "vertical flip")
             .modal("show");
-
-
     });

@@ -53,5 +53,14 @@ namespace Sanatorium.Controllers
         {
             return await Db.Rooms.ToArrayAsync();
         }
+
+        public async Task<JsonResult> RegisterPatient(string fullName,string gender)
+        {
+            var book = new PatientBook(fullName);
+            var patient = new Patient(fullName,gender,book);
+            Db.Patients.Add(patient);
+            await Db.SaveChangesAsync();
+            return Json(patient);
+        }
     }
 }
