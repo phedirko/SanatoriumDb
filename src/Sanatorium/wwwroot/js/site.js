@@ -145,3 +145,13 @@ $("#registerPatient").click(function() {
         }       
 });
 });
+$("#settlePatients").click(function() {
+    $.ajax({
+        type: "POST",
+        data: $("#settlePatientsForm").serialize(),
+        url: "../Admin/SettlePatients/",
+        success: function (patientsId) {
+            window.location.reload();
+        }
+    });
+});

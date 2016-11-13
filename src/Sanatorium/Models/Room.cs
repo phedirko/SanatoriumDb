@@ -29,6 +29,7 @@ namespace Sanatorium.Models
 
         public int Capacity { get; set; }
 
+        public bool HavePatients { get; set; } = false;
         public List<Patient> Patients { get; set; }
     }
 }

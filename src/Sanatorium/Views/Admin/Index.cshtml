@@ -116,30 +116,38 @@
 </h4>
 <div class="ui grid">
     <div class="ten wide column">
-        <table class="ui celled striped table">
+        <table class="ui celled table">
             <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Is Settle</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Is Settle</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody id="patientTableBody">
-                @foreach (var patient in Model.Patients)
-                {
-                    <tr id="Patient@(patient.Id)">
-                        <td>
-                            @patient.FullName
-                        </td>
-                        <td>@patient.Gender</td>
-                        <td>@patient.Gender</td>
-                        <td class="center aligned collapsed">
-                            <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
-                            <button class="ui red basic button removeBtn" id="@patient.Id">Settle</button>
-                        </td>
-                    </tr>
-                }
+            @foreach (var patient in Model.Patients)
+            {
+                <tr id="Patient@(patient.Id)">
+                    <td>
+                        @patient.FullName
+                    </td>
+                    <td>@patient.Gender</td>
+                    @if (patient.IsSettle)
+                    {
+                        <td class="positive" id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                    }
+                    else
+                    {
+                        <td class="negative"  id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                    }
+                        
+                    <td class="center aligned collapsed">
+                        <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
+                        <button class="ui red basic button removeBtn" id="@patient.Id">Settle</button>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
 
@@ -147,22 +155,22 @@
     <div class="six wide column" align="right">
         <h4>Settle patients</h4>
         <form class="ui form" id="settlePatientsForm" onsubmit="return false;">
-            <div class="field">
+            <div class="field" id="test111">
 
 
                 <select class="ui fluid search dropdown" multiple="" name="patientsId" id="patientsSettle">
                     <option value="">Patients</option>
-                   @foreach (var patient in Model.Patients)
-                   {
-                       <option value="@patient.Id">@patient.FullName,@patient.Gender</option>
-                   }
+                    @foreach (var patient in Model.Patients.Where(p=>p.IsSettle == false))
+                    {
+                        <option value="@patient.Id" id="option@(patient.Id)">@patient.FullName,@patient.Gender</option>
+                    }
                 </select>
             </div>
             <div class="field">
                 <select class="ui fluid search dropdown"  name="roomId" id="roomSettle">
-                    @foreach (var room in Model.Rooms)
+                    @foreach (var room in Model.Rooms.Where(r=>r.HavePatients==false))
                     {
-                        <option value="@room.Id">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
+                        <option value="@room.Id" id="room@(room.Id)">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
                     }
                 </select>
             </div>

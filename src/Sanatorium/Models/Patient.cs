@@ -26,6 +26,8 @@
 
         public string FullName { get; set; }
 
+        public bool IsSettle { get; set; } = false;
+
         public bool SeenByNurse { get; set; } = false;
 
         public  string Gender { get; set; }

@@ -64,10 +64,26 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return Json(patient);
         }
-
-        public async Task SettlePatients(int roomId, List<int> patientsId)
+        [HttpPost]
+        public async Task<JsonResult> SettlePatients(int roomId, List<int> patientsId)
         {
-            var x = 5;
+            var room = await Db.Rooms.SingleOrDefaultAsync(r => r.Id == roomId);
+            if (room.Capacity >= patientsId.Count)
+            {
+                room.Patients = new List<Patient>();
+                foreach (var id in patientsId)
+                {
+                    var patient =await Db.Patients.SingleOrDefaultAsync(p => p.Id == id);
+                    room.Patients.Add(patient);
+                    patient.IsSettle = true;
+                }
+
+                room.HavePatients = true;
+                await Db.SaveChangesAsync();
+
+                return Json(patientsId);
+            }
+            return  Json(new List<int>());
         }
     }
 }
