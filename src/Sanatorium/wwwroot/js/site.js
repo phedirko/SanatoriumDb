@@ -139,8 +139,7 @@ $("#registerPatient").click(function() {
         data: $("#registerPatientForm").serialize(),
         url: "../Admin/RegisterPatient/",
         success: function (patient) {
-            $("#fullName").val("");
-            console.log("success");
+            window.location.reload();
 
         }       
 });

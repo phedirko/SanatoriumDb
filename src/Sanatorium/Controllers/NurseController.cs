@@ -18,7 +18,7 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel(await Db.Procedures.ToListAsync());
+            var model = new IndexViewModel(await Db.Procedures.ToListAsync(),await Db.Patients.ToListAsync());
             return View(model);
         }
 
