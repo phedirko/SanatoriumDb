@@ -18,7 +18,7 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel(await Db.Procedures.ToListAsync(),await Db.Patients.ToListAsync());
+            var model = new IndexViewModel(await Db.Procedures.ToListAsync(),await Db.Patients.Include(p=>p.Book).ToListAsync());
             return View(model);
         }
 
@@ -45,5 +45,17 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return Json(procedure);
         }
+
+        public async Task<IActionResult> PatientBook(int id)
+        {
+            var model = new PatientBookViewModel(await Db.PatientBooks.Include(b=>b.Deseases).Include(b=>b.Procedures).SingleOrDefaultAsync(b=>b.Id == id),await Db.Procedures.ToListAsync());
+            return View(model);
+        }
+
+        //public async Task<IActionResult> AddDesease(int id, string desease)
+        //{
+        //    var patientBook =await Db.PatientBooks.SingleOrDefaultAsync(p => p.Id == id);
+        //    patientBook.
+        //}
     }
 }
