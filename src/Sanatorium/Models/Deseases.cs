@@ -5,10 +5,20 @@ using System.Threading.Tasks;
 
 namespace Sanatorium.Models
 {
-    public class Deseases
+    public class Desease
     {
         public int Id { get; set; }
 
         public string Name { get; set; }
+
+        public Desease()
+        {
+            
+        }
+
+        public Desease(string name)
+        {
+            Name = name;
+        }
     }
 }

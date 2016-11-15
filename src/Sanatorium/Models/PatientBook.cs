@@ -8,7 +8,7 @@ namespace Sanatorium.Models
         {
         }
 
-        public PatientBook(string fullName, List<Deseases> deseases)
+        public PatientBook(string fullName, List<Desease> deseases)
         {
             FullName = fullName;
 
@@ -20,7 +20,7 @@ namespace Sanatorium.Models
             FullName = fullName;
         }
 
-        public PatientBook(string fullName, List<Deseases> deseases, List<ProcedureFrequency> procedures)
+        public PatientBook(string fullName, List<Desease> deseases, List<ProcedureFrequency> procedures)
         {
             FullName = fullName;
 
@@ -33,7 +33,7 @@ namespace Sanatorium.Models
 
         public string FullName { get; set; }
 
-        public List<Deseases> Deseases { get; set; } = new List<Deseases>();
+        public List<Desease> Deseases { get; set; } = new List<Desease>();
 
         public int PatientId { get; set; }
         public List<ProcedureFrequency> Procedures { get; set; }

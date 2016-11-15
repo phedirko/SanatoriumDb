@@ -19,6 +19,8 @@ namespace Sanatorium.Data
 
         public DbSet<ProcedureFrequency> ProceduresFrequency { get; set; }
 
+        public DbSet<Desease> Deseases { get; set; }
+
         public DbSet<Room> Rooms { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
