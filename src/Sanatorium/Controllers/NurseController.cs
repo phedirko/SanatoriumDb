@@ -45,7 +45,7 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return Json(procedure);
         }
-
+        [HttpGet]
         public async Task<IActionResult> PatientBook(int id,int patientId)
         {
             var patient =await Db.Patients.SingleOrDefaultAsync(p => p.Id == patientId);
@@ -57,7 +57,7 @@ namespace Sanatorium.Controllers
             var model = new PatientBookViewModel(await Db.PatientBooks.Include(b=>b.Deseases).Include(b=>b.Procedures).SingleOrDefaultAsync(b=>b.Id == id),await Db.Procedures.ToListAsync());
             return View(model);
         }
-
+        [HttpPost]
         public async Task<JsonResult> AddDesease(int id, string desease)
         {
             var patientBook = await Db.PatientBooks.SingleOrDefaultAsync(p => p.Id == id);
@@ -66,7 +66,7 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return Json(newDesease);
         }
-
+        [HttpPost]
         public async Task<int> RemoveDesease(int id, int deseaseId)
         {
             var patientBook = await Db.PatientBooks.Include(p=>p.Deseases).SingleOrDefaultAsync(p => p.Id == id);

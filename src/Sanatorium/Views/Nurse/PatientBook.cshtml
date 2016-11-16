@@ -31,10 +31,28 @@
         </div>
     </div>
     <div class="four wide column">
-        <h5>Deseases</h5>
-        <ul class="ui list" id="patientDeseases">
-        </ul>
-        <button class="ui basic orange button">Add Desease</button>
+        <table class="ui celled table attached">
+            <thead>
+                <tr>
+                    <th>Desease</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="deseaseTableBody">
+                @foreach (var desease in Model.Book.Deseases)
+            {
+                    <tr id="desease@(desease.Id)">
+                        <td>
+                            @desease.Name
+                        </td>                       
+                        <td class="center aligned collapsed"sds>
+                            <a class="ui yellow basic button desease" book-id="@Model.Book.Id" desease-id="@desease.Id">Remove</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="fluid bottom attached ui button">Fits container</button>
     </div>
     <div class="eight wide column">
 
