@@ -2,18 +2,19 @@
 var rooms = [];
 var patients = [];
 $(document)
-    .ready(function () {
-        $('#adminRegisterGender').dropdown();
-        $('#patientsSettle').dropdown();
-        $('#roomSettle').dropdown();
+    .ready(function() {
+        $("#adminRegisterGender").dropdown();
+        $("#patientsSettle").dropdown();
+        $("#roomSettle").dropdown();
+        $(".ui.dropdown").dropdown();
         $.ajax({
-            url: '../Admin/GetRooms/',
-            success:function(allRooms) {
+            url: "../Admin/GetRooms/",
+            success: function(allRooms) {
                 $(allRooms)
                     .each(function(index, element) {
                         rooms.push(element);
                     });
-              //  console.log(rooms);
+                //  console.log(rooms);
             }
         });
     });
@@ -197,18 +198,41 @@ $("#addDesease")
             .modal("setting", "transition", "scale")
             .modal("show");
     });
-$(".removeDesease").click(function (e) {
-    var deseaseId = e.currentTarget.attributes["desease-id"].value;
-    var bookId = e.currentTarget.attributes["book-id"].value;
-    $.ajax({
-        type: "POST",
-        data: {id:bookId,deseaseId:deseaseId},
-        url: "../Nurse/RemoveDesease/",
-        success: function (id) {
-            $("#desease" + id).remove();
-        }
-
-
+$(".removeDesease")
+    .click(function(e) {
+        var deseaseId = e.currentTarget.attributes["desease-id"].value;
+        var bookId = e.currentTarget.attributes["book-id"].value;
+        $.ajax({
+            type: "POST",
+            data: { id: bookId, deseaseId: deseaseId },
+            url: "../Nurse/RemoveDesease/",
+            success: function(id) {
+                $("#desease" + id).remove();
+            }
+        });
     });
-    // console.log(e.attributes.desease-id);
-});
+$("#addProcedureFrequency")
+    .click(function() {
+        $("#addProcedureFrequencyModal")
+            .modal({
+                blurring: true
+            })
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    $.ajax({
+                        type: "POST",
+                        data: $("#addProcedureFrequencyForm").serialize(),
+                        url: "../Nurse/AddProcedureFrequency/",
+                        success: function(procedureFrequency) {
+                            console.log(procedureFrequency);
+                        }
+                    });
+                }
+            })
+            .modal("setting", "transition", "scale")
+            .modal("show");
+    });

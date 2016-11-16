@@ -104,3 +104,58 @@
         </div>
     </div>
 </div>
+<div class="ui modal medium" id="addProcedureFrequencyModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Add new procedure to patient @Model.Book.FullName
+    </div>
+    <div class="content">
+        <form id="addProcedureFrequencyForm">
+            <div class="ui fluid search selection dropdown large">
+                <input type="hidden" name="procedureId">
+                <i class="dropdown icon"></i>
+                <div class="default text">Select Procedure</div>
+                <div class="menu">
+                    @foreach (var procedure in Model.Procedures)
+                    {
+                        <div class="item" data-value="@procedure.Id">
+                            @procedure.Name
+                        </div>
+                    }                   
+                </div>
+            </div>
+            <br />
+            <div class="ui fluid search selection dropdown large">
+                <input type="hidden" name="frequency">
+                <i class="dropdown icon"></i>
+                <div class="default text">Select Frequency</div>
+                <div class="menu">
+                    <div class="item" data-value="Every Day">
+                        Every Day
+                    </div>
+                    <div class="item" data-value="Twice a day">
+                        Twice a day
+                    </div>
+                    <div class="item" data-value="Three times per day">
+                        Three times per day
+                    </div>
+                    <div class="item" data-value="Two times a week">
+                        Two times a week
+                    </div>
+                    <div class="item" data-value="Three times per week">
+                        Three times per week
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" name="bookId" value="@Model.Book.Id">
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui basic red deny button">
+            Nope
+        </div>
+        <div class="ui basic green ok  button">
+            Add Procedure
+        </div>
+    </div>
+</div>

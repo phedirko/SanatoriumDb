@@ -75,7 +75,7 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return deseaseId;
         }
-
+        [HttpPost]
         public async Task<JsonResult> AddProcedureFrequency(int bookId, int procedureId, string frequency)
         {
             var patientBook = await Db.PatientBooks.SingleOrDefaultAsync(p => p.Id == bookId);
