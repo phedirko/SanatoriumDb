@@ -75,5 +75,15 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return deseaseId;
         }
+
+        public async Task<JsonResult> AddProcedureFrequency(int bookId, int procedureId, string frequency)
+        {
+            var patientBook = await Db.PatientBooks.SingleOrDefaultAsync(p => p.Id == bookId);
+            var procedureFrequency =
+                new ProcedureFrequency(await Db.Procedures.SingleOrDefaultAsync(p => p.Id == procedureId), frequency);
+            patientBook.Procedures.Add(procedureFrequency);
+
+            return Json(procedureFrequency);
+        }
     }
 }

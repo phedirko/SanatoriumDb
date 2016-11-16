@@ -46,16 +46,41 @@
                             @desease.Name
                         </td>                       
                         <td class="center aligned collapsed"sds>
-                            <a class="ui yellow basic button desease" book-id="@Model.Book.Id" desease-id="@desease.Id">Remove</a>
+                            <a class="ui yellow basic button removeDesease" book-id="@Model.Book.Id" desease-id="@desease.Id"><i class="remove circle icon"></i>Remove</a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <button class="fluid bottom attached ui button" book-id="@Model.Book.Id" id="addDesease">Add desease</button>
+        <button class="fluid bottom attached ui basic red button large" book-id="@Model.Book.Id" id="addDesease"><i class="add circle icon medium"></i>Add desease</button>
     </div>
     <div class="eight wide column">
-
+        <table class="ui celled table attached">
+            <thead>
+                <tr>
+                    <th>Procedure</th>
+                    <th>Frequency</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="proceduresFrequencyTableBody">
+                @foreach (var procedureFrequency in Model.Book.Procedures)
+            {
+                    <tr id="procedureFrequency@(procedureFrequency.Id)">
+                        <td>
+                            @procedureFrequency.PatientProcedure.Name
+                        </td>
+                        <td>
+                            @procedureFrequency.Frequency
+                        </td>
+                        <td class="center aligned collapsed">
+                            <a class="ui yellow basic button procedureFrequency" book-id="@Model.Book.Id" procedureFrequency-id="@procedureFrequency.Id"><i class="remove circle icon"></i>Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button class="fluid bottom attached ui basic red button large" book-id="@Model.Book.Id" id="addProcedureFrequency"><i class="add circle icon medium"></i>Add procedure</button>
     </div>
     
 </div>

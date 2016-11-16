@@ -186,7 +186,7 @@ $("#addDesease")
                                     bookId +
                                     '" desease-id="' +
                                     desease.id +
-                                    '">Remove</a>' +
+                                    '"><i class="remove circle icon"></i>Remove</a>' +
                                     " </td>" +
                                     "</tr>");
                         }
@@ -197,3 +197,18 @@ $("#addDesease")
             .modal("setting", "transition", "scale")
             .modal("show");
     });
+$(".removeDesease").click(function (e) {
+    var deseaseId = e.currentTarget.attributes["desease-id"].value;
+    var bookId = e.currentTarget.attributes["book-id"].value;
+    $.ajax({
+        type: "POST",
+        data: {id:bookId,deseaseId:deseaseId},
+        url: "../Nurse/RemoveDesease/",
+        success: function (id) {
+            $("#desease" + id).remove();
+        }
+
+
+    });
+    // console.log(e.attributes.desease-id);
+});
