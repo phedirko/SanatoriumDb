@@ -13,7 +13,7 @@ $(document)
                     .each(function(index, element) {
                         rooms.push(element);
                     });
-                console.log(rooms);
+              //  console.log(rooms);
             }
         });
     });
@@ -154,3 +154,46 @@ $("#settlePatients").click(function() {
         }
     });
 });
+$("#addDesease")
+    .click(function() {
+        $("#addDeseaseModal")
+            .modal({
+                blurring: true
+            })
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    var bookId = $("#addDesease").attr("book-id");
+                    console.log($("#deseaseName").val());
+                    console.log($("#addDesease").attr("book-id"));
+                    $.ajax({
+                        type: "POST",
+                        data: { id: bookId, desease: $("#deseaseName").val() },
+                        url: "../Nurse/AddDesease/",
+                        success: function(desease) {
+                            $("#deseaseTableBody")
+                                .append('<tr id="desease' +
+                                    desease.id +
+                                    '">' +
+                                    "<td>" +
+                                    desease.name +
+                                    "</td>" +
+                                    '<td class="center aligned collapsed">' +
+                                    '  <a class="ui yellow basic button desease" book-id="' +
+                                    bookId +
+                                    '" desease-id="' +
+                                    desease.id +
+                                    '">Remove</a>' +
+                                    " </td>" +
+                                    "</tr>");
+                        }
+
+                    });
+                }
+            })
+            .modal("setting", "transition", "scale")
+            .modal("show");
+    });

@@ -52,11 +52,30 @@
                 }
             </tbody>
         </table>
-        <button class="fluid bottom attached ui button">Fits container</button>
+        <button class="fluid bottom attached ui button" book-id="@Model.Book.Id" id="addDesease">Add desease</button>
     </div>
     <div class="eight wide column">
 
     </div>
     
 </div>
-
+<div class="ui modal small" id="addDeseaseModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Desease Name
+    </div>
+    <div class="content">
+        <div class="ui input focus">
+            <input type="text" placeholder="Desease name" id="deseaseName">
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            Nope
+        </div>
+        <div class="ui positive right labeled icon button">
+            Add Desease
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
