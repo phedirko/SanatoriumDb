@@ -63,6 +63,29 @@
 </h4>
 <div class="ui grid">
     <div class="sixteen wide column">
+        <div class="ui selection dropdown">
+            <input type="hidden" name="gender">
+            <i class="dropdown icon"></i>
+            <div class="default text">Gender</div>
+            <div class="menu">
+                <div class="item" data-value="male" data-text="Male">
+                    <i class="male icon"></i>
+                    Male
+                </div>
+                <div class="item" data-value="female" data-text="Female">
+                    <i class="female icon"></i>
+                    Female
+                </div>
+            </div>
+        </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search by FullName" id="searchPatientByName">
+            <i class="inverted circular search link icon"></i>
+        </div>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="sixteen wide column">
         <table class="ui celled table">
             <thead>
                 <tr>

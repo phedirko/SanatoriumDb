@@ -7,7 +7,9 @@ $(document)
         $("#patientsSettle").dropdown();
         $("#roomSettle").dropdown();
         $(".ui.dropdown").dropdown();
-        $.ajax({
+        switch (window.location.pathname) {
+            case "/Admin":
+             $.ajax({
             url: "../Admin/GetRooms/",
             success: function(allRooms) {
                 $(allRooms)
@@ -16,7 +18,14 @@ $(document)
                     });
                 //  console.log(rooms);
             }
-        });
+             });
+                break;
+            case "/Nurse":
+                console.log("nurse");
+                break;
+        default:
+        }       
+       
     });
 $("#addRoomBtn")
     .click(function() {
@@ -263,4 +272,11 @@ $(".procedureFrequencyDelete").click(function(e) {
             $("#procedureFrequency" + procedureFrequency).remove();
         }
     });
+});
+$("#test").click(function() {
+    $('.ui.sidebar')
+  .sidebar('toggle')
+    ;
+
+
 });

@@ -6,14 +6,11 @@
     <title>@ViewData["Title"] - Sanatorium</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
         <link rel="stylesheet" href="~/css/site.css"/>
         <link href="~/lib/semantic/dist/semantic.css" rel="stylesheet"/>
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"/>
+     
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true"/>
     </environment>
 </head>
@@ -39,29 +36,51 @@
             </div>
         </div>
     </div>*@
-<div class="ui container">
-    @RenderBody()
-    <hr/>
-    <footer>
-        <p>&copy; 2016 - Sanatorium</p>
-    </footer>
+<div class="ui sidebar vertical menu">
+    <br />
+    <div class="item">
+        <div class="ui icon input">
+            <input type="text" placeholder="Search patient">
+            <i class="search icon"></i>
+        </div>
+    </div>
+    <a class="item">
+        2
+    </a>
+    <a class="item">
+        3
+    </a>
+</div>
+<div class="pusher">
+    <div class="ui container">
+        <br />
+        <div class="ui grid" id="test">
+            
+            <div class="six wide column"><h2><i class="content icon">Menu</i></h2>
+            </div>
+            <div class="eight wide centered column">
+                <h2>Sanatorium</h2>
+            </div>
+        </div>
+        @RenderBody()
+        <hr/>
+        <footer>
+            <p>&copy; 2016 - Sanatorium</p>
+        </footer>
+    </div>
+   
 </div>
 
 <environment names="Development">
     <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery.cookie/jquery.cookie.js"></script>
     <script src="~/lib/semantic/dist/semantic.js"></script>
 </environment>
 <environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
             asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
             asp-fallback-test="window.jQuery">
-        
-    </script>
-    <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
-            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         
     </script>
     <script src="~/js/site.min.js" asp-append-version="true"></script>

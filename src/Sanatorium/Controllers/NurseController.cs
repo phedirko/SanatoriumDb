@@ -93,5 +93,10 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
             return procedureFrequencyId;
         }
+        [HttpGet]
+        public async Task<Patient[]> GetAllPatients()
+        {
+            return await Db.Patients.ToArrayAsync();
+        }
     }
 }
