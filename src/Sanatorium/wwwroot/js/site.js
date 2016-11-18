@@ -228,7 +228,24 @@ $("#addProcedureFrequency")
                         data: $("#addProcedureFrequencyForm").serialize(),
                         url: "../Nurse/AddProcedureFrequency/",
                         success: function(procedureFrequency) {
-                            console.log(procedureFrequency);
+                            $("#proceduresFrequencyTableBody")
+                                .append('<tr id="procedureFrequency' +
+                                    procedureFrequency.id +
+                                    '">' +
+                                    "<td>" +
+                                    procedureFrequency.patientProcedure.name +
+                                    "</td>" +
+                                    "<td>" +
+                                    procedureFrequency.frequency +
+                                    "</td>" +
+                                    '<td class="center aligned collapsed">' +
+                                    ' <a class="ui yellow basic button procedureFrequencyDelete" book-id="' +
+                                    $("#bookId").val() +
+                                    '" procedureFrequency-id="' +
+                                    procedureFrequency.id +
+                                    '"><i class="remove circle icon"></i>Delete</a>' +
+                                    " </td>" +
+                                    " </tr>");
                         }
                     });
                 }
@@ -236,3 +253,14 @@ $("#addProcedureFrequency")
             .modal("setting", "transition", "scale")
             .modal("show");
     });
+$(".procedureFrequencyDelete").click(function(e) {
+    var procedureFrequencyId = e.currentTarget.attributes["procedureFrequency-id"].value;
+    $.ajax({
+        type: "POST",
+        data: { procedureFrequencyId:procedureFrequencyId},
+        url: "../Nurse/DeleteProcedureFrequency/",
+        success: function (procedureFrequency) {
+            $("#procedureFrequency" + procedureFrequency).remove();
+        }
+    });
+});

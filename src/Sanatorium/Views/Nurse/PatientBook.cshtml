@@ -74,7 +74,7 @@
                             @procedureFrequency.Frequency
                         </td>
                         <td class="center aligned collapsed">
-                            <a class="ui yellow basic button procedureFrequency" book-id="@Model.Book.Id" procedureFrequency-id="@procedureFrequency.Id"><i class="remove circle icon"></i>Delete</a>
+                            <a class="ui yellow basic button procedureFrequencyDelete" book-id="@Model.Book.Id" procedureFrequency-id="@procedureFrequency.Id"><i class="remove circle icon"></i>Delete</a>
                         </td>
                     </tr>
                 }
@@ -112,7 +112,7 @@
     <div class="content">
         <form id="addProcedureFrequencyForm">
             <div class="ui fluid search selection dropdown large">
-                <input type="hidden" name="procedureId">
+                <input type="hidden" name="procedureId" id="procedureId">
                 <i class="dropdown icon"></i>
                 <div class="default text">Select Procedure</div>
                 <div class="menu">
@@ -126,7 +126,7 @@
             </div>
             <br />
             <div class="ui fluid search selection dropdown large">
-                <input type="hidden" name="frequency">
+                <input type="hidden" name="frequency" id="frequency">
                 <i class="dropdown icon"></i>
                 <div class="default text">Select Frequency</div>
                 <div class="menu">
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="bookId" value="@Model.Book.Id">
+            <input type="hidden" name="bookId" value="@Model.Book.Id" id="bookId">
         </form>
     </div>
     <div class="actions">

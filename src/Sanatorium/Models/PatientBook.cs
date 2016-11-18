@@ -36,6 +36,6 @@ namespace Sanatorium.Models
         public List<Desease> Deseases { get; set; } = new List<Desease>();
 
         public int PatientId { get; set; }
-        public List<ProcedureFrequency> Procedures { get; set; }
+        public List<ProcedureFrequency> Procedures { get; set; } = new List<ProcedureFrequency>();
     }
 }
