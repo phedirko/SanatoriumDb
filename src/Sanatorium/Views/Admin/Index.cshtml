@@ -115,6 +115,29 @@
     Settle Patient
 </h4>
 <div class="ui grid">
+    <div class="sixteen wide column">
+        <div class="ui selection dropdown">
+            <input type="hidden" name="gender" id="genderSort">
+            <i class="dropdown icon"></i>
+            <div class="default text">Gender</div>
+            <div class="menu">
+                <div class="item genderSort" data-value="male" data-text="Male" id="Male">
+                    <i class="male icon"></i>
+                    Male
+                </div>
+                <div class="item genderSort" data-value="female" data-text="Female" id="Female">
+                    <i class="female icon"></i>
+                    Female
+                </div>
+            </div>
+        </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search by FullName" id="searchPatientByName">
+            <i class="inverted circular search link icon"></i>
+        </div>
+    </div>
+</div>
+<div class="ui grid">
     <div class="ten wide column">
         <table class="ui celled table">
             <thead>
@@ -144,7 +167,7 @@
                         
                     <td class="center aligned collapsed">
                         <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
-                        <button class="ui red basic button removeBtn" id="@patient.Id">Settle</button>
+                        <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName">Settle</button>
                     </td>
                 </tr>
             }
@@ -180,6 +203,10 @@
         </form>
     </div>
 </div>
+<h4 class="ui horizontal divider header">
+    <i class="bar chart icon"></i>
+    Statistics
+</h4>
 <div class="ui modal" id="removeRoomModal">
     <i class="close icon"></i>
     <div class="header">
@@ -191,6 +218,27 @@
     <div class="actions">
         <div class="ui  basic red button cancel" id="cancel">Cancel</div>
         <div class="ui green basic button ok" id="ok">OK</div>
+    </div>
+</div>
+<div class="ui modal" id="settlePatientModal">
+    <i class="close icon"></i>
+    <div class="header" id="patientModalName">
+       
+    </div>
+    <div class="content">
+        <form>
+            <select class="ui fluid search dropdown" name="roomId">
+                @foreach (var room in Model.Rooms.Where(r => r.HavePatients == false))
+                {
+                    <option value="@room.Id" id="room@(room.Id)">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
+                }
+            </select>
+
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui  basic red button cancel" >Cancel</div>
+        <div class="ui green basic button ok" >Settle</div>
     </div>
 </div>
 <div class="ui modal" id="updateRoomModal">

@@ -3,6 +3,7 @@ var rooms = [];
 var patients = [];
 var tablePatientsGender = "";
 var tablePatientsFullName = "";
+var onlyUnSeenPatients = false;
 $(document)
     .ready(function() {
         $("#adminRegisterGender").dropdown();
@@ -10,33 +11,33 @@ $(document)
         $("#roomSettle").dropdown();
         $(".ui.dropdown").dropdown();
         switch (window.location.pathname) {
-            case "/Admin":
-             $.ajax({
-            url: "../Admin/GetRooms/",
-            success: function(allRooms) {
-                $(allRooms)
-                    .each(function(index, element) {
-                        rooms.push(element);
-                    });
-                //  console.log(rooms);
-            }
-             });
-                break;
-            case "/Nurse":
-                $.ajax({
-                    url: "../Nurse/GetAllPatients/",
-                    success: function (allPatients) {
-                        $(allPatients)
-                            .each(function (index, element) {
-                                patients.push(element);
-                            });
-                        //  console.log(rooms);
-                    }
-                });
-                break;
+        case "/Admin":
+            $.ajax({
+                url: "../Admin/GetRooms/",
+                success: function(allRooms) {
+                    $(allRooms)
+                        .each(function(index, element) {
+                            rooms.push(element);
+                        });
+                    //  console.log(rooms);
+                }
+            });
+            break;
+        case "/Nurse":
+            $.ajax({
+                url: "../Nurse/GetAllPatients/",
+                success: function(allPatients) {
+                    $(allPatients)
+                        .each(function(index, element) {
+                            patients.push(element);
+                        });
+                    //  console.log(rooms);
+                }
+            });
+            break;
         default:
-        }       
-       
+        }
+
     });
 $("#addRoomBtn")
     .click(function() {
@@ -154,27 +155,29 @@ $(".removeBtn")
             .modal("setting", "transition", "scale")
             .modal("show");
     });
-$("#registerPatient").click(function() {
-    $.ajax({
-        type: "POST",
-        data: $("#registerPatientForm").serialize(),
-        url: "../Admin/RegisterPatient/",
-        success: function (patient) {
-            window.location.reload();
+$("#registerPatient")
+    .click(function() {
+        $.ajax({
+            type: "POST",
+            data: $("#registerPatientForm").serialize(),
+            url: "../Admin/RegisterPatient/",
+            success: function(patient) {
+                window.location.reload();
 
-        }       
-});
-});
-$("#settlePatients").click(function() {
-    $.ajax({
-        type: "POST",
-        data: $("#settlePatientsForm").serialize(),
-        url: "../Admin/SettlePatients/",
-        success: function (patientsId) {
-            window.location.reload();
-        }
+            }
+        });
     });
-});
+$("#settlePatients")
+    .click(function() {
+        $.ajax({
+            type: "POST",
+            data: $("#settlePatientsForm").serialize(),
+            url: "../Admin/SettlePatients/",
+            success: function(patientsId) {
+                window.location.reload();
+            }
+        });
+    });
 $("#addDesease")
     .click(function() {
         $("#addDeseaseModal")
@@ -273,67 +276,85 @@ $("#addProcedureFrequency")
             .modal("setting", "transition", "scale")
             .modal("show");
     });
-$(".procedureFrequencyDelete").click(function(e) {
-    var procedureFrequencyId = e.currentTarget.attributes["procedureFrequency-id"].value;
-    $.ajax({
-        type: "POST",
-        data: { procedureFrequencyId:procedureFrequencyId},
-        url: "../Nurse/DeleteProcedureFrequency/",
-        success: function (procedureFrequency) {
-            $("#procedureFrequency" + procedureFrequency).remove();
-        }
-    });
-});
-$("#test").click(function() {
-    $('.ui.sidebar')
-  .sidebar('toggle')
-    ;
-
-
-});
-$("#searchPatientByName").keyup(function () {
-    var currentValue = $("#searchPatientByName").val();
-    tablePatientsFullName = currentValue;
-    $.each(patients,
-        function (index, value) {
-            if (!tablePatientsGender) {
-
-
-                if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                    currentValue) {
-                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                } else {
-                    $("#Patient" + patients[index].id).attr("style", "display:none");
-                }
-            } else {
-                if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                    currentValue && patients[index].gender === tablePatientsGender) {
-                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                } else {
-                    $("#Patient" + patients[index].id).attr("style", "display:none");
-                }
+$(".procedureFrequencyDelete")
+    .click(function(e) {
+        var procedureFrequencyId = e.currentTarget.attributes["procedureFrequency-id"].value;
+        $.ajax({
+            type: "POST",
+            data: { procedureFrequencyId: procedureFrequencyId },
+            url: "../Nurse/DeleteProcedureFrequency/",
+            success: function(procedureFrequency) {
+                $("#procedureFrequency" + procedureFrequency).remove();
             }
         });
-});
+    });
+$("#test")
+    .click(function() {
+        $(".ui.sidebar")
+            .sidebar("toggle");
+    });
+$("#searchPatientByName")
+    .keyup(function() {
+        var currentValue = $("#searchPatientByName").val();
+        tablePatientsFullName = currentValue;
+        $.each(patients,
+            function(index, value) {
+                if (!tablePatientsGender) {
+                    if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                        currentValue) {
+                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                    } else {
+                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                    }
+                } else {
+                    if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                        currentValue &&
+                        patients[index].gender === tablePatientsGender) {
+                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                    } else {
+                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                    }
+                }
+            });
+    });
 $(".genderSort")
-    .click(function (e) {
+    .click(function(e) {
         var currentGender = e.currentTarget.attributes["data-text"].value;
         tablePatientsGender = currentGender;
         $.each(patients,
-        function (index, value) {
-            if (!tablePatientsFullName) {
-                if (patients[index].gender === currentGender) {
-                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+            function(index, value) {
+                if (!tablePatientsFullName) {
+                    if (patients[index].gender === currentGender) {
+                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                    } else {
+                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                    }
                 } else {
-                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                    if (patients[index].gender === currentGender &&
+                        patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                        tablePatientsFullName) {
+                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                    } else {
+                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                    }
                 }
-            } else {
-                if (patients[index].gender === currentGender && patients[index].fullName.substring(0,tablePatientsFullName.length) ===
-             tablePatientsFullName) {
-                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                } else {
-                    $("#Patient" + patients[index].id).attr("style", "display:none");
-                }
-            }
-        });
+            });
+    });
+$(".settleBtn")
+    .click(function (e) {
+        console.log(e);
+        $("#settlePatientModal")
+            .modal({
+                blurring: true
+            })
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    console.log("1");
+                }})
+            .modal("setting", "transition", "scale")
+            .modal("show");
     });
