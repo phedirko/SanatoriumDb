@@ -1,6 +1,8 @@
 ﻿// Write your Javascript code.
 var rooms = [];
 var patients = [];
+var tablePatientsGender = "";
+var tablePatientsFullName = "";
 $(document)
     .ready(function() {
         $("#adminRegisterGender").dropdown();
@@ -21,7 +23,16 @@ $(document)
              });
                 break;
             case "/Nurse":
-                console.log("nurse");
+                $.ajax({
+                    url: "../Nurse/GetAllPatients/",
+                    success: function (allPatients) {
+                        $(allPatients)
+                            .each(function (index, element) {
+                                patients.push(element);
+                            });
+                        //  console.log(rooms);
+                    }
+                });
                 break;
         default:
         }       
@@ -280,3 +291,49 @@ $("#test").click(function() {
 
 
 });
+$("#searchPatientByName").keyup(function () {
+    var currentValue = $("#searchPatientByName").val();
+    tablePatientsFullName = currentValue;
+    $.each(patients,
+        function (index, value) {
+            if (!tablePatientsGender) {
+
+
+                if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                    currentValue) {
+                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                } else {
+                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                }
+            } else {
+                if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                    currentValue && patients[index].gender === tablePatientsGender) {
+                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                } else {
+                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                }
+            }
+        });
+});
+$(".genderSort")
+    .click(function (e) {
+        var currentGender = e.currentTarget.attributes["data-text"].value;
+        tablePatientsGender = currentGender;
+        $.each(patients,
+        function (index, value) {
+            if (!tablePatientsFullName) {
+                if (patients[index].gender === currentGender) {
+                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                } else {
+                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                }
+            } else {
+                if (patients[index].gender === currentGender && patients[index].fullName.substring(0,tablePatientsFullName.length) ===
+             tablePatientsFullName) {
+                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                } else {
+                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                }
+            }
+        });
+    });
