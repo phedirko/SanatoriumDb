@@ -85,5 +85,16 @@ namespace Sanatorium.Controllers
             }
             return  Json(new List<int>());
         }
+
+        [HttpPost]
+        public async Task<JsonResult> SettlePatient(int roomId, int patientId)
+        {
+            var room = await Db.Rooms.SingleOrDefaultAsync(r => r.Id == roomId);
+            var patient = await Db.Patients.SingleOrDefaultAsync(p => p.Id == patientId);
+            room.Patients = new List<Patient>();
+            room.Patients.Add(patient);
+            patient.IsSettle = true;
+            return Json(new {room = roomId, patient = patientId});
+        }
     }
 }

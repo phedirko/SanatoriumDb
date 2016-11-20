@@ -342,7 +342,10 @@ $(".genderSort")
     });
 $(".settleBtn")
     .click(function (e) {
-        console.log(e);
+        var fullName = e.currentTarget.attributes["patient-name"].value;
+        $("#patientId").val(e.currentTarget.attributes.id.value);
+        var gender = e.currentTarget.attributes["patient-gender"].value;
+        $("#patientModalName").text(fullName + "," + gender);
         $("#settlePatientModal")
             .modal({
                 blurring: true
@@ -352,8 +355,20 @@ $(".settleBtn")
                 onDeny: function() {
                     return true;
                 },
-                onApprove: function() {
-                    console.log("1");
+                onApprove: function () {
+                    $.ajax({
+                        type: "POST",
+                        data: $("#singlePatientSettleForm").serialize(),
+                        url: "../Admin/SettlePatient/",
+                        success: function (data) {
+                            $("#patient" + data.patient + "Settle").removeClass("negative");
+                            $("#patient" + data.patient + "Settle").addClass("positive");
+                            $("#patient" + data.patient + "Settle").html("True");
+                            $("#option" + data.patient).remove();
+                            $("#room" + data.room).remove();
+                            $("#room" + data.room+"Modal").remove();
+                        }
+                    });
                 }})
             .modal("setting", "transition", "scale")
             .modal("show");

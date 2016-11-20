@@ -167,7 +167,7 @@
                         
                     <td class="center aligned collapsed">
                         <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
-                        <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName">Settle</button>
+                        <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
                     </td>
                 </tr>
             }
@@ -222,15 +222,16 @@
 </div>
 <div class="ui modal" id="settlePatientModal">
     <i class="close icon"></i>
-    <div class="header" id="patientModalName">
-       
+    <div class="header" >
+       <h2 id="patientModalName"></h2>
     </div>
     <div class="content">
-        <form>
+        <form id="singlePatientSettleForm">
+            <input type="hidden" name="patientId" value="" id="patientId">
             <select class="ui fluid search dropdown" name="roomId">
                 @foreach (var room in Model.Rooms.Where(r => r.HavePatients == false))
                 {
-                    <option value="@room.Id" id="room@(room.Id)">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
+                    <option value="@room.Id" id="room@(room.Id)Modal">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
                 }
             </select>
 
