@@ -207,6 +207,11 @@
     <i class="bar chart icon"></i>
     Statistics
 </h4>
+<div class="ui grid">
+    <canvas id="myChart"></canvas>
+
+
+</div>
 <div class="ui modal" id="removeRoomModal">
     <i class="close icon"></i>
     <div class="header">
@@ -266,3 +271,6 @@
         <div class="ui green basic button ok" id="ok">Update</div>
     </div>
 </div>
+@section scripts{  
+        <script src="~/js/adminStat.js"></script>
+}

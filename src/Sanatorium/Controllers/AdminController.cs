@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Sanatorium.Data;
 using Sanatorium.Models;
 using Sanatorium.Models.AdminViewModels;
+using System.Linq;
 
 namespace Sanatorium.Controllers
 {
@@ -95,6 +96,12 @@ namespace Sanatorium.Controllers
             room.Patients.Add(patient);
             patient.IsSettle = true;
             return Json(new {room = roomId, patient = patientId});
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetRoomsStat()
+        {
+            return Json(Db.Rooms.Select(r => new {cap = r.Capacity,price = r.DailyPrice}).OrderBy(r=>r.cap));
         }
     }
 }
