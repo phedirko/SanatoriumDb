@@ -99,9 +99,29 @@ namespace Sanatorium.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> GetRoomsStat()
+        public  JsonResult GetRoomsStat()
         {
-            return Json(Db.Rooms.Select(r => new {cap = r.Capacity,price = r.DailyPrice}).OrderBy(r=>r.cap));
+            return Json(Db.Rooms.Select(r => new {cap = r.Capacity, price = r.DailyPrice}).OrderBy(r => r.cap));
+        }
+
+        [HttpGet]
+        public JsonResult GetGenderStat()
+        {
+            var query = Db.Patients.AsEnumerable()
+                .GroupBy(r => r.Gender)
+                .Select(grp => new {Gender = grp.Key, Value = grp.Count()})
+                .ToList();
+            return Json(query);
+        }
+
+        [HttpGet]
+        public JsonResult GetSettleStat()
+        {
+            var query = Db.Patients.AsEnumerable()
+                .GroupBy(r => r.IsSettle)
+                .Select(grp => new { Settle = grp.Key, Value = grp.Count() })
+                .ToList();
+            return Json(query);
         }
     }
 }
