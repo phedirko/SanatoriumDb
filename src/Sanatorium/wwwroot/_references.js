@@ -1,5 +1,6 @@
 ﻿/// <autosync enabled="true" />
 /// <reference path="js/adminstat.js" />
+/// <reference path="js/nursestat.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/chart.js/dist/Chart.js" />
 /// <reference path="lib/jquery.cookie/jquery.cookie.js" />

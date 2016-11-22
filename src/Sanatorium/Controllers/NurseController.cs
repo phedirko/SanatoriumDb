@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Sanatorium.Data;
 using Sanatorium.Models;
 using Sanatorium.Models.NurseViewModels;
+using System.Linq;
 
 namespace Sanatorium.Controllers
 {
@@ -97,6 +98,16 @@ namespace Sanatorium.Controllers
         public async Task<Patient[]> GetAllPatients()
         {
             return await Db.Patients.ToArrayAsync();
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetDeseasesStat()
+        {
+            var query = Db.Deseases.AsEnumerable()
+                .GroupBy(d => d.Name)
+                .Select(grp => new { Desease = grp.Key, Value = grp.Count() })
+                .ToList();
+            return Json(query);
         }
     }
 }

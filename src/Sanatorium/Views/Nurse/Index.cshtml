@@ -103,37 +103,49 @@
     <div class="sixteen wide column">
         <table class="ui celled table">
             <thead>
-                <tr>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Seen by nurse</th>
-                    <th>Actions</th>
-                </tr>
+            <tr>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Seen by nurse</th>
+                <th>Actions</th>
+            </tr>
             </thead>
             <tbody id="patientTableBody">
-                @foreach (var patient in Model.Patients)
+            @foreach (var patient in Model.Patients)
             {
-                    <tr id="Patient@(patient.Id)">
-                        <td>
-                            @patient.FullName
-                        </td>
-                        <td>@patient.Gender</td>
-                        @if (patient.SeenByNurse)
-                        {
-                            <td class="positive" id="patient@(patient.Id)Seen">@patient.SeenByNurse</td>
-                        }
-                        else
-                        {
-                            <td class="negative" id="patient@(patient.Id)Seen">@patient.SeenByNurse</td>
-                        }
+                <tr id="Patient@(patient.Id)">
+                    <td>
+                        @patient.FullName
+                    </td>
+                    <td>@patient.Gender</td>
+                    @if (patient.SeenByNurse)
+                    {
+                        <td class="positive" id="patient@(patient.Id)Seen">@patient.SeenByNurse</td>
+                    }
+                    else
+                    {
+                        <td class="negative" id="patient@(patient.Id)Seen">@patient.SeenByNurse</td>
+                    }
 
-                        <td class="center aligned collapsed">
-                            <a class="ui yellow basic button " href="~/Nurse/PatientBook?id=@patient.Book.Id&patientId=@patient.Id">Details</a>                     
-                        </td>
-                    </tr>
-                }
+                    <td class="center aligned collapsed">
+                        <a class="ui yellow basic button " href="~/Nurse/PatientBook?id=@patient.Book.Id&patientId=@patient.Id">Details</a>                     
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
+    </div>
+</div>
+<h4 class="ui horizontal divider header">
+    <i class="bar chart icon"></i>
+    Statistics
+</h4>
+<div class="ui grid">
+    <div class="eight wide column">
+        <canvas id="deseasesChart"></canvas>
+    </div>
+    <div class="eight wide column">
+        <canvas id="anotherChart"></canvas>
     </div>
 </div>
 <div class="ui page dimmer" id="procedureAddedDimmer">
@@ -143,3 +155,6 @@
         </div>
     </div>
 </div>
+@section scripts{   
+         <script src="~/js/nurseStat.js"></script>
+}
