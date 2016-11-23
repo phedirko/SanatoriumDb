@@ -167,7 +167,15 @@
                         
                     <td class="center aligned collapsed">
                         <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
-                        <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
+                        @if (patient.IsSettle)
+                        {
+                            <button class="ui red basic button disabled settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
+                        }
+                        else
+                        {
+                            <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
+                        }
+                       
                     </td>
                 </tr>
             }

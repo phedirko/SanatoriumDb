@@ -109,5 +109,11 @@ namespace Sanatorium.Controllers
                 .ToList();
             return Json(query);
         }
+
+        public JsonResult GetDeseasesRadarStat()
+        {
+            var query = Db;
+            return Json(query);
+        }
     }
 }
