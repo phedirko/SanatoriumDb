@@ -3,6 +3,7 @@ var rooms = [];
 var patients = [];
 var tablePatientsGender = "";
 var tablePatientsFullName = "";
+var tablePatientsType;
 var onlyUnSeenPatients = false;
 $(document)
     .ready(function() {
@@ -19,7 +20,6 @@ $(document)
                         .each(function(index, element) {
                             rooms.push(element);
                         });
-                    //  console.log(rooms);
                 }
             });
             $.ajax({
@@ -29,7 +29,6 @@ $(document)
                         .each(function (index, element) {
                             patients.push(element);
                         });
-                    //  console.log(rooms);
                 }
             });
             break;
@@ -41,7 +40,7 @@ $(document)
                         .each(function(index, element) {
                             patients.push(element);
                         });
-                    //  console.log(rooms);
+                    tablePatientsType = "All";
                 }
             });
             break;
@@ -295,48 +294,95 @@ $("#searchPatientByName")
     .keyup(function() {
         var currentValue = $("#searchPatientByName").val();
         tablePatientsFullName = currentValue;
-        $.each(patients,
-            function(index, value) {
-                if (!tablePatientsGender) {
-                    if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                        currentValue) {
-                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+        var flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
+        if (flag) {
+            $.each(patients,
+                function(index, value) {
+                    if (!tablePatientsGender) {
+                        if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                            currentValue) {
+                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                        } else {
+                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                        }
                     } else {
-                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                        if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                            currentValue &&
+                            patients[index].gender === tablePatientsGender) {
+                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                        } else {
+                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                        }
                     }
-                } else {
-                    if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                        currentValue &&
-                        patients[index].gender === tablePatientsGender) {
-                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                    } else {
-                        $("#Patient" + patients[index].id).attr("style", "display:none");
-                    }
-                }
-            });
+                });
+        } else {
+            var isSeen = tablePatientsType == "Unseen" ? false : true;
+            $.each(patients,
+                 function (index, value) {
+                     if (!tablePatientsGender) {
+                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                             currentValue && patients[index].seenByNurse.toString() == isSeen.toString()) {
+                             $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                         } else {
+                             $("#Patient" + patients[index].id).attr("style", "display:none");
+                         }
+                     } else {
+                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                             currentValue &&
+                             patients[index].gender === tablePatientsGender && patients[index].seenByNurse.toString() == isSeen.toString()) {
+                             $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                         } else {
+                             $("#Patient" + patients[index].id).attr("style", "display:none");
+                         }
+                     }
+                 });
+        }
     });
 $(".genderSort")
     .click(function(e) {
         var currentGender = e.currentTarget.attributes["data-text"].value;
         tablePatientsGender = currentGender;
-        $.each(patients,
-            function(index, value) {
-                if (!tablePatientsFullName) {
-                    if (patients[index].gender === currentGender) {
-                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+        var flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
+        if (flag) {
+            $.each(patients,
+                function(index, value) {
+                    if (!tablePatientsFullName) {
+                        if (patients[index].gender === currentGender) {
+                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                        } else {
+                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                        }
                     } else {
-                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                        if (patients[index].gender === currentGender &&
+                            patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                            tablePatientsFullName) {
+                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                        } else {
+                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                        }
                     }
-                } else {
-                    if (patients[index].gender === currentGender &&
-                        patients[index].fullName.substring(0, tablePatientsFullName.length) ===
-                        tablePatientsFullName) {
-                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                    } else {
-                        $("#Patient" + patients[index].id).attr("style", "display:none");
-                    }
-                }
-            });
+                });
+        } else {
+            var isSeen = tablePatientsType == "Unseen" ? false : true;
+            $.each(patients,
+               function (index, value) {
+                   if (!tablePatientsFullName) {
+                       if (patients[index].gender === currentGender&&patients[index].seenByNurse.toString() == isSeen.toString()) {
+                           $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                       } else {
+                           $("#Patient" + patients[index].id).attr("style", "display:none");
+                       }
+                   } else {
+                       if (patients[index].gender === currentGender &&
+                           patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                           tablePatientsFullName && patients[index].seenByNurse.toString() == isSeen.toString()) {
+                           $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                       } else {
+                           $("#Patient" + patients[index].id).attr("style", "display:none");
+                       }
+                   }
+               });
+        }
     });
 $(".settleBtn")
     .click(function (e) {
@@ -400,4 +446,56 @@ $(".infoBtn")
         $("#patientInfoModal")
             .modal("setting", "transition", "scale")
             .modal("show");
+    });
+$(".seenSort")
+    .click(function(e) {
+        tablePatientsType = e.currentTarget.attributes["data-text"].value;
+        console.log(e.currentTarget.attributes["data-text"].value);
+        var flag = tablePatientsType == "Unseen" ? false : true;
+        if (tablePatientsGender != "" && tablePatientsFullName != "") {
+            $.each(patients,
+             function (index, value) {
+                 if (patients[index].gender === tablePatientsGender && patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                       tablePatientsFullName && patients[index].seenByNurse.toString() == flag.toString()) {
+                         $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                     } else {
+                         $("#Patient" + patients[index].id).attr("style", "display:none");
+                     }
+                
+             });
+        }
+        else if (tablePatientsGender == "" && tablePatientsFullName == "") {
+            $.each(patients,
+           function (index, value) {
+               if (patients[index].seenByNurse.toString() == flag.toString()) {
+                   $("#Patient" + patients[index].id).attr("style", "display:table-row");
+               } else {
+                   $("#Patient" + patients[index].id).attr("style", "display:none");
+               }
+
+           });
+        }
+        else if (tablePatientsGender == "") {
+            $.each(patients,
+                function(index, value) {
+                    if (patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                        tablePatientsFullName &&
+                        patients[index].seenByNurse.toString() == flag.toString()) {
+                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                    } else {
+                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                    }
+
+                });
+        } else {
+            $.each(patients,
+            function (index, value) {
+                if (patients[index].gender === tablePatientsGender &&  patients[index].seenByNurse.toString() == flag.toString()) {
+                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                } else {
+                    $("#Patient" + patients[index].id).attr("style", "display:none");
+                }
+
+            });
+        }
     });
