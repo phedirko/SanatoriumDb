@@ -166,7 +166,7 @@
                     }
                         
                     <td class="center aligned collapsed">
-                        <button class="ui yellow basic button updateBtn" id="@patient.Id">Info</button>
+                        <button class="ui yellow basic button infoBtn" id="@patient.Id">Info</button>
                         @if (patient.IsSettle)
                         {
                             <button class="ui red basic button disabled settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
@@ -287,6 +287,29 @@
     <div class="actions">
         <div class="ui  basic red button cancel" id="cancel">Cancel</div>
         <div class="ui green basic button ok" id="ok">Update</div>
+    </div>
+</div>
+<div class="ui modal" id="patientInfoModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Patient Info
+    </div>
+    <div class="content">
+        <div class="ui card">
+            <div class="image">
+                <img src="~/lib/semantic/examples/assets/images/avatar/nan.jpg" id="patientImg">
+            </div>
+            <div class="content">
+                <a class="header" id="patientFullName">Kristy</a>
+                <div class="description">
+                    <i class="female icon" id="genderIcon"></i><label id="genderLabel">Female,</label><label id="settleLabel">Settle</label>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div class="actions">
+        <div class="ui  basic red button cancel">Cancel</div>
+        <div class="ui green basic button ok">Ok</div>
     </div>
 </div>
 @section scripts{  

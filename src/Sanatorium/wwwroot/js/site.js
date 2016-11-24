@@ -22,6 +22,16 @@ $(document)
                     //  console.log(rooms);
                 }
             });
+            $.ajax({
+                url: "../Admin/GetAllPatients/",
+                success: function (allPatients) {
+                    $(allPatients)
+                        .each(function (index, element) {
+                            patients.push(element);
+                        });
+                    //  console.log(rooms);
+                }
+            });
             break;
         case "/Nurse":
             $.ajax({
@@ -96,9 +106,6 @@ $(".updateBtn")
         var id = e.target.id;
         $("#updateRoomModal")
             .modal({
-                blurring: true
-            })
-            .modal({
                 closable: true,
                 onDeny: function() {
                     return true;
@@ -129,9 +136,6 @@ $(".removeBtn")
     .click(function(e) {
         var id = e.target.id;
         $("#removeRoomModal")
-            .modal({
-                blurring: true
-            })
             .modal({
                 closable: true,
                 onDeny: function() {
@@ -181,9 +185,6 @@ $("#settlePatients")
 $("#addDesease")
     .click(function() {
         $("#addDeseaseModal")
-            .modal({
-                blurring: true
-            })
             .modal({
                 closable: true,
                 onDeny: function() {
@@ -237,9 +238,6 @@ $(".removeDesease")
 $("#addProcedureFrequency")
     .click(function() {
         $("#addProcedureFrequencyModal")
-            .modal({
-                blurring: true
-            })
             .modal({
                 closable: true,
                 onDeny: function() {
@@ -348,9 +346,6 @@ $(".settleBtn")
         $("#patientModalName").text(fullName + "," + gender);
         $("#settlePatientModal")
             .modal({
-                blurring: true
-            })
-            .modal({
                 closable: true,
                 onDeny: function() {
                     return true;
@@ -375,4 +370,34 @@ $(".settleBtn")
     });
 function GenerateRandomPalette() {
     return '#' + Math.floor(Math.random() * 16777215).toString(16);
-}
+};
+
+$(".infoBtn")
+    .click(function (e) {
+        var patient = {};
+        console.log(e.currentTarget.attributes["id"].value);
+        for (var i = 0; i < patients.length; i++) {
+            if (patients[i].id == e.currentTarget.attributes["id"].value) {
+                patient = patients[i];
+                break;
+            }
+
+        }
+        $("#patientFullName").text(patient.fullName);
+        if (patient.gender.toString() === "Male") {
+            $("#genderLabel").text("Male,");
+            $("#patientImg").attr("src", "/lib/semantic/examples/assets/images/avatar/tom.jpg");
+        } else {
+            $("#patientImg").attr("src", "/lib/semantic/examples/assets/images/avatar/nan.jpg");
+            $("#genderLabel").text("Female,");
+
+        }
+        if (patient.isSettle) {
+            $("#settleLabel").text("Settle");
+        } else {
+            $("#settleLabel").text("UnSettle");
+        }
+        $("#patientInfoModal")
+            .modal("setting", "transition", "scale")
+            .modal("show");
+    });

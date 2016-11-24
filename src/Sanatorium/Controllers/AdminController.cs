@@ -20,7 +20,7 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel(await Db.Rooms.ToListAsync(),await Db.Patients.ToListAsync());
+            var model = new IndexViewModel(await Db.Rooms.ToListAsync(), await Db.Patients.ToListAsync());
             return View(model);
         }
 
@@ -57,14 +57,15 @@ namespace Sanatorium.Controllers
             return await Db.Rooms.ToArrayAsync();
         }
 
-        public async Task<JsonResult> RegisterPatient(string fullName,string gender)
+        public async Task<JsonResult> RegisterPatient(string fullName, string gender)
         {
             var book = new PatientBook(fullName);
-            var patient = new Patient(fullName,gender,book);
+            var patient = new Patient(fullName, gender, book);
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
             return Json(patient);
         }
+
         [HttpPost]
         public async Task<JsonResult> SettlePatients(int roomId, List<int> patientsId)
         {
@@ -74,7 +75,7 @@ namespace Sanatorium.Controllers
                 room.Patients = new List<Patient>();
                 foreach (var id in patientsId)
                 {
-                    var patient =await Db.Patients.SingleOrDefaultAsync(p => p.Id == id);
+                    var patient = await Db.Patients.SingleOrDefaultAsync(p => p.Id == id);
                     room.Patients.Add(patient);
                     patient.IsSettle = true;
                 }
@@ -84,7 +85,7 @@ namespace Sanatorium.Controllers
 
                 return Json(patientsId);
             }
-            return  Json(new List<int>());
+            return Json(new List<int>());
         }
 
         [HttpPost]
@@ -99,29 +100,40 @@ namespace Sanatorium.Controllers
         }
 
         [HttpGet]
-        public  JsonResult GetRoomsStat()
+        public async Task<JsonResult> GetRoomsStat()
         {
-            return Json(Db.Rooms.Select(r => new {cap = r.Capacity, price = r.DailyPrice}).OrderBy(r => r.cap));
+            var query =
+                await
+                    Db.Rooms.Select(r => new {cap = r.Capacity, price = r.DailyPrice})
+                        .OrderBy(r => r.cap)
+                        .ToArrayAsync();
+            return Json(query);
         }
 
         [HttpGet]
-        public JsonResult GetGenderStat()
+        public async Task<JsonResult> GetGenderStat()
         {
-            var query = Db.Patients.AsEnumerable()
+            var query = await Db.Patients
                 .GroupBy(r => r.Gender)
                 .Select(grp => new {Gender = grp.Key, Value = grp.Count()})
-                .ToList();
+                .ToListAsync();
             return Json(query);
         }
 
         [HttpGet]
-        public JsonResult GetSettleStat()
+        public async Task<JsonResult> GetSettleStat()
         {
-            var query = Db.Patients.AsEnumerable()
+            var query = await Db.Patients
                 .GroupBy(r => r.IsSettle)
-                .Select(grp => new { Settle = grp.Key, Value = grp.Count() })
-                .ToList();
+                .Select(grp => new {Settle = grp.Key, Value = grp.Count()})
+                .ToListAsync();
             return Json(query);
+        }
+
+        [HttpGet]
+        public async Task<Patient[]> GetAllPatients()
+        {
+            return await Db.Patients.ToArrayAsync();
         }
     }
 }
