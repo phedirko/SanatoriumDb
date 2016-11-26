@@ -175,10 +175,8 @@ $("#addDesease")
                         data: { id: bookId, desease: $("#deseaseName").val() },
                         url: "../Nurse/AddDesease/",
                         success: function(desease) {
-                            $("#deseaseTableBody")
-                                .append(`<tr id="desease${desease.id}"><td>${desease.name
-                                    }</td><td class="center aligned collapsed">  <a class="ui yellow basic button desease" book-id="${bookId}" desease-id="${
-                                    desease.id}"><i class="remove circle icon"></i>Remove</a> </td></tr>`);
+                            window.location.reload();
+                            $("#deseaseName").val("");
                         }
 
                     });
@@ -214,12 +212,7 @@ $("#addProcedureFrequency")
                         data: $("#addProcedureFrequencyForm").serialize(),
                         url: "../Nurse/AddProcedureFrequency/",
                         success: function(procedureFrequency) {
-                            $("#proceduresFrequencyTableBody")
-                                .append(`<tr id="procedureFrequency${procedureFrequency.id}"><td>${
-                                    procedureFrequency.patientProcedure.name}</td><td>${procedureFrequency.frequency
-                                    }</td><td class="center aligned collapsed"> <a class="ui yellow basic button procedureFrequencyDelete" book-id="${$("#bookId").val()
-                                    }" procedureFrequency-id="${procedureFrequency.id
-                                    }"><i class="remove circle icon"></i>Delete</a> </td> </tr>`);
+                            window.location.reload();
                         }
                     });
                 }
@@ -360,12 +353,7 @@ $(".settleBtn")
                         data: $("#singlePatientSettleForm").serialize(),
                         url: "../Admin/SettlePatient/",
                         success: function(data) {
-                            $(`#patient${data.patient}Settle`).removeClass("negative");
-                            $(`#patient${data.patient}Settle`).addClass("positive");
-                            $(`#patient${data.patient}Settle`).html("True");
-                            $(`#option${data.patient}`).remove();
-                            $(`#room${data.room}`).remove();
-                            $(`#room${data.room}Modal`).remove();
+                          window.location.reload();
                         }
                     });
                 }
@@ -513,3 +501,22 @@ $(".removeProcedure")
             })
             .modal("show");
     });
+$("#changePhoto").click(function () {
+    var img = new FormData();
+    img.append('img', $("#img")[0])
+    $.ajax({
+        url: "../Nurse/SaveImg",
+        type: "POST",
+       
+        cache: false,
+        contentType: false,
+        processData: false,
+        
+        data: img,
+        success: function () {
+            
+        }
+
+    })
+
+});

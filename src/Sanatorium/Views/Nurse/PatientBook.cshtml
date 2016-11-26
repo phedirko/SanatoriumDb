@@ -6,9 +6,34 @@
 }
 <div class="ui grid">
     <div class="four wide column">
+        <div class="ui big breadcrumb">
+            <a class="section">Home</a>
+            <i class="right chevron icon divider"></i>
+            <div class="active section">Personal Information</div>
+        </div>
+    </div>
+</div>
+<div class="ui grid">
+    <div class="five wide column">
         <div class="ui card">
             <div class="image">
-                <img src="~/lib/semantic/examples/assets/images/avatar/tom.jpg">
+                @if (Model.Book.PhotoUrl!=null)
+                {
+                    <img src="@Model.Book.PhotoUrl">
+
+                }
+                else
+                {
+                    if (ViewData["Gender"].ToString() == "Male")
+                    {
+                    <img src="/lib/semantic/examples/assets/images/avatar/tom.jpg">
+                    }
+                    else
+                    {
+                        <img src="~/lib/semantic/examples/assets/images/avatar/nan.jpg">
+                    }
+
+                }
             </div>
             <div class="content">
                 <div class="header">@Model.Book.FullName</div>
@@ -20,13 +45,13 @@
                 </div>
             </div>
             <div class="extra content">
-                <span class="right floated">
-                    some info
-                </span>
-                <span>
-                    <i class="user icon"></i>
-                    some info
-                </span>
+                <form method="post" asp-action="SaveImg" asp-controller="Nurse" enctype="multipart/form-data">
+                    <input class="basic ui teal button fluid" type="file" accept="image/*" name="img" id="img"/>
+                    <br />
+                    <input type="hidden" name="id" value="@Model.Book.Id" />
+                    <button type="submit" id="changePhoto" class="basic ui teal button fluid">ChangePhoto</button>
+                
+                </form>
             </div>
         </div>
     </div>
@@ -54,7 +79,7 @@
         </table>
         <button class="fluid bottom attached ui basic red button large" book-id="@Model.Book.Id" id="addDesease"><i class="add circle icon medium"></i>Add desease</button>
     </div>
-    <div class="eight wide column">
+    <div class="seven wide column">
         <table class="ui celled table attached">
             <thead>
                 <tr>

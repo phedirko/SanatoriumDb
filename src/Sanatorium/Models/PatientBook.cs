@@ -29,6 +29,7 @@ namespace Sanatorium.Models
             Procedures = procedures;
         }
 
+        public string PhotoUrl { get; set; }
         public int Id { get; set; }
 
         public string FullName { get; set; }

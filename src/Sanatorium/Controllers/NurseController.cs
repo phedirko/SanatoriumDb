@@ -5,6 +5,10 @@ using Sanatorium.Data;
 using Sanatorium.Models;
 using Sanatorium.Models.NurseViewModels;
 using System.Linq;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
 
 namespace Sanatorium.Controllers
 {
@@ -12,9 +16,11 @@ namespace Sanatorium.Controllers
     {
         public readonly ApplicationDbContext Db;
 
-        public NurseController(ApplicationDbContext db)
+        private IHostingEnvironment Environment;
+        public NurseController(ApplicationDbContext db,IHostingEnvironment environment)
         {
             Db = db;
+            Environment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -51,6 +57,7 @@ namespace Sanatorium.Controllers
         public async Task<IActionResult> PatientBook(int id,int patientId)
         {
             var patient =await Db.Patients.SingleOrDefaultAsync(p => p.Id == patientId);
+            ViewData["Gender"] = patient.Gender;
             if (!patient.SeenByNurse)
             {
                 patient.SeenByNurse = true;
@@ -104,10 +111,10 @@ namespace Sanatorium.Controllers
         [HttpGet]
         public async Task<JsonResult> GetDeseasesStat()
         {
-            var query = Db.Deseases.AsEnumerable()
+            var query =await Db.Deseases
                 .GroupBy(d => d.Name)
                 .Select(grp => new { Desease = grp.Key, Value = grp.Count() })
-                .ToList();
+                .ToListAsync();
             return Json(query);
         }
 
@@ -115,6 +122,21 @@ namespace Sanatorium.Controllers
         {
             var query = Db;
             return Json(query);
+        }
+
+        public async Task SaveImg(int id,IFormFile img)
+        {
+            var uploads = Path.Combine(Environment.WebRootPath, "uploads");         
+            if (img.Length > 0)
+            {
+                var patientBook =await Db.PatientBooks.SingleOrDefaultAsync(b => b.Id == id);
+                using (var fileStream = new FileStream(Path.Combine(uploads, img.FileName), FileMode.Create))
+                {
+                    await img.CopyToAsync(fileStream);
+                    patientBook.PhotoUrl = fileStream.Name.Substring(fileStream.Name.IndexOf("wwwroot") + 7);
+                }
+                await Db.SaveChangesAsync();
+            }
         }
     }
 }
