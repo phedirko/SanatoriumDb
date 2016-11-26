@@ -7,7 +7,7 @@
 <div class="ui grid">
     <div class="four wide column">
         <div class="ui big breadcrumb">
-            <a class="section">Home</a>
+            <a class="section" href="/Nurse">Home</a>
             <i class="right chevron icon divider"></i>
             <div class="active section">Personal Information</div>
         </div>
@@ -49,6 +49,7 @@
                     <input class="basic ui teal button fluid" type="file" accept="image/*" name="img" id="img"/>
                     <br />
                     <input type="hidden" name="id" value="@Model.Book.Id" />
+                    <input type="hidden" name="patientId" value="@Model.Book.PatientId" />
                     <button type="submit" id="changePhoto" class="basic ui teal button fluid">ChangePhoto</button>
                 
                 </form>

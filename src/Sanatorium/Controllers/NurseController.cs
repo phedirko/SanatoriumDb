@@ -124,7 +124,7 @@ namespace Sanatorium.Controllers
             return Json(query);
         }
 
-        public async Task SaveImg(int id,IFormFile img)
+        public async Task<RedirectToActionResult> SaveImg(int id,int patientId,IFormFile img)
         {
             var uploads = Path.Combine(Environment.WebRootPath, "uploads");         
             if (img.Length > 0)
@@ -137,6 +137,7 @@ namespace Sanatorium.Controllers
                 }
                 await Db.SaveChangesAsync();
             }
+            return  RedirectToAction("PatientBook",new { id = id, patientId = patientId });
         }
     }
 }

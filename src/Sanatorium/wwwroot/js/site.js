@@ -512,10 +512,7 @@ $("#changePhoto").click(function () {
         contentType: false,
         processData: false,
         
-        data: img,
-        success: function () {
-            
-        }
+        data: img
 
     })
 
