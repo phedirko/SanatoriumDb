@@ -3,6 +3,7 @@
 /// <reference path="js/nursestat.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/chart.js/dist/Chart.js" />
+/// <reference path="lib/downloadjs/download.js" />
 /// <reference path="lib/jquery.cookie/jquery.cookie.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation/dist/jquery.validate.js" />

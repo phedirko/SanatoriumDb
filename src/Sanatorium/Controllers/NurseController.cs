@@ -139,5 +139,9 @@ namespace Sanatorium.Controllers
             }
             return  RedirectToAction("PatientBook",new { id = id, patientId = patientId });
         }
+        public async Task<JsonResult> GetPatientsInfo()
+        {
+            return Json(await Db.Patients.ToListAsync());
+        }
     }
 }

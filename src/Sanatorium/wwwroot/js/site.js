@@ -517,3 +517,10 @@ $("#changePhoto").click(function () {
     })
 
 });
+$("#test11").click(function () {
+    $.ajax({
+        url: "../Nurse/GetPatientsInfo",
+        success: function (data) {
+        }
+    })
+});

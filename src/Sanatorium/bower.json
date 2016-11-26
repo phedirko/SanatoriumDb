@@ -7,6 +7,7 @@
     "jquery-validation-unobtrusive": "3.2.6",
     "semantic": "2.1.8",
     "jquery.cookie": "1.4.1",
-    "Chart.js": "2.0.2"
+    "Chart.js": "2.0.2",
+    "downloadjs": ""
   }
 }

@@ -54,12 +54,15 @@
 <div class="pusher">
     <div class="ui container">
         <br />
-        <div class="ui grid fixed top menu" id="test">
+        <div class="ui grid fixed top menu" >
             
-            <div class="six wide column"><h2><i class="content icon">Menu</i></h2>
+            <div class="six wide column" id="test"><h2><i class="content icon">Menu</i></h2>
             </div>
-            <div class="eight wide centered column">
+            <div class="four wide centered column">
                 <h2>Sanatorium</h2>
+            </div>
+            <div class="six wide column">
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
         @RenderBody()
@@ -77,6 +80,8 @@
     <script src="~/lib/jquery.cookie/jquery.cookie.js"></script>
     <script src="~/lib/semantic/dist/semantic.js"></script>
     <script src="~/lib/Chart.js/dist/Chart.js"></script>
+    <script src="~/lib/downloadjs/download.js"></script>
+    <script src="~/lib/excellentexport/excellentexport.js"></script>
 </environment>
 <environment names="Staging,Production">
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
