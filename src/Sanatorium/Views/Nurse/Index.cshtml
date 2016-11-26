@@ -22,32 +22,35 @@
             <tbody id="procedureTableBody">
             @foreach (var procedure in Model.Procedures)
             {
-                <tr>
-                    <td class="collapsing">
+                <tr id="procedure@(procedure.Id)Tr">
+                    <td class="collapsing" id="procedure@(procedure.Id)Name">
                         @procedure.Name
                     </td>
-                    <td>@procedure.Price</td>
-                    <td class="center aligned collapsed"><button class="ui teal basic updateProcedureInfo button">Update Info</button></td>
+                    <td id="procedure@(procedure.Id)Price">@procedure.Price</td>
+                    <td class="center aligned collapsed">
+                        <button id="updateProcedure@(procedure.Id)Button" class="ui teal basic updateProcedureInfo button" procedure-id="@procedure.Id" procedure-name="@procedure.Name" procedure-price="@procedure.Price">
+                            Update Info
+                        </button>
+                        <button id="removeProcedure@(procedure.Id)" class="ui red basic removeProcedure button" procedure-id="@procedure.Id">
+                            Remove
+                        </button>
+                    </td>
                 </tr>
             }
             </tbody>
         </table>
-
-
     </div>
-    <div class="six wide column" align="right">
-
+    <div class="two wide column"></div>
+    <div class="four wide column" align="right">
         <form id="addProcedureForm" onsubmit="return false;">
             <h4>Add Procedure</h4>
-            <div class="ui left icon input">
+            <div class="ui fluid input">
                 <input type="text" placeholder="Name" name="name" id="name">
-                <i class="users icon"></i>
             </div>
             <br/>
             <br/>
-            <div class="ui left icon input">
+            <div class="ui fluid input">
                 <input type="number" placeholder="Price" name="price" id="price">
-                <i class="users icon"></i>
             </div>
             <br/>
             <br/>
@@ -128,7 +131,7 @@
                     }
 
                     <td class="center aligned collapsed">
-                        <a class="ui yellow basic button " href="~/Nurse/PatientBook?id=@patient.Book.Id&patientId=@patient.Id">Details</a>                     
+                        <a class="ui yellow basic button " href="~/Nurse/PatientBook?id=@patient.Book.Id&patientId=@patient.Id">Details</a>
                     </td>
                 </tr>
             }
@@ -162,24 +165,35 @@
         Update Procedure
     </div>
     <div class="content">
-        <form id="updateprocedureForm">
+        <form id="updateProcedureForm">
             <div class="ui left icon input">
                 <input type="text" placeholder="Name" name="name" id="updateName">
                 <i class="users icon"></i>
             </div>
-            <br />
-            <br />
+            <br/>
+            <br/>
             <div class="ui left icon input">
-                <input type="text" placeholder="Price" name="price" id="updateprice">
+                <input type="text" placeholder="Price" name="price" id="updatePrice">
                 <i class="money icon"></i>
             </div>
+            <input type="hidden" name="procedureId" id="updateProcedureId"/>
         </form>
     </div>
     <div class="actions">
-        <div class="ui  basic red button cancel" >Cancel</div>
-        <div class="ui green basic button ok" >Update</div>
+        <div class="ui  basic red button cancel">Cancel</div>
+        <div class="ui green basic button ok">Update</div>
     </div>
 </div>
-@section scripts{   
-         <script src="~/js/nurseStat.js"></script>
+<div class="ui modal" id="removeProcedureModal">
+    <i class="close icon"></i>
+    <div class="header">
+        You remove this procedure forever
+    </div>
+    <div class="actions">
+        <div class="ui  basic red button cancel">Cancel</div>
+        <div class="ui green basic button ok">Remove</div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/js/nurseStat.js"></script>
 }

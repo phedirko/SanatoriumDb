@@ -24,9 +24,9 @@ $(document)
             });
             $.ajax({
                 url: "../Admin/GetAllPatients/",
-                success: function (allPatients) {
+                success: function(allPatients) {
                     $(allPatients)
-                        .each(function (index, element) {
+                        .each(function(index, element) {
                             patients.push(element);
                         });
                 }
@@ -56,20 +56,9 @@ $("#addRoomBtn")
             url: "../Admin/AppendRoom/",
             success: function(room) {
                 $("#roomTableBody")
-                    .append("<tr>" +
-                        '<td class="collapsing">Комната ' +
-                        room.roomNumber +
-                        "</td>" +
-                        "<td>" +
-                        "Этаж " +
-                        room.stageNumber +
-                        ",вместимость " +
-                        room.capacity +
-                        ",цена " +
-                        room.dailyPrice +
-                        "</td>" +
-                        '<td class="right aligned collapsing">Какие то действия</td>' +
-                        "</tr>");
+                    .append(`<tr><td class="collapsing">Комната ${room.roomNumber}</td><td>Этаж ${room.stageNumber
+                        },вместимость ${room.capacity},цена ${room.dailyPrice
+                        }</td><td class="right aligned collapsing">Какие то действия</td></tr>`);
                 $("#tableDimmerIcon").removeClass("remove circle");
                 $("#tableDimmerIcon").addClass("add circle");
                 $("#tableDimmerText").text("Room successively added");
@@ -83,19 +72,10 @@ $("#addProcedureBtn")
             type: "POST",
             data: $("#addProcedureForm").serialize(),
             url: "../Nurse/AppendProcedure/",
-            success: function(procedure) {
-                $("#procedureTableBody")
-                    .append("<tr>" +
-                        '<td class="collapsing">' +
-                        procedure.name +
-                        "</td>" +
-                        '<td class="right aligned collapsing">' +
-                        procedure.price +
-                        "</td>" +
-                        "<td>Какие то действия</td>" +
-                        "</tr>");
+            success: function() {
                 $("#name").val("");
                 $("#price").val("");
+                window.location.reload();
                 $("#procedureAddedDimmer").dimmer("show");
             }
         });
@@ -113,16 +93,13 @@ $(".updateBtn")
                     $.ajax({
                         type: "POST",
                         data: $("#updateRoomForm").serialize(),
-                        url: "../Admin/UpdateRoom?roomId=" + id,
+                        url: `../Admin/UpdateRoom?roomId=${id}`,
                         success: function(updateRoom) {
-                            $("#tdRoomNumber" + id).text("Room " + updateRoom.roomNumber);
-                            $("#tdRoomInfo" + id)
-                                .text("Stage " +
-                                    updateRoom.stageNumber +
-                                    ",capacity " +
-                                    updateRoom.capacity +
-                                    ",daily price " +
-                                    updateRoom.dailyPrice);
+                            $(`#tdRoomNumber${id}`).text(`Room ${updateRoom.roomNumber}`);
+                            $(`#tdRoomInfo${id}`)
+                                .text(`Stage ${updateRoom
+                                    .stageNumber},capacity ${updateRoom.capacity},daily price ${updateRoom.dailyPrice
+                                    }`);
                         }
                     });
                 }
@@ -146,7 +123,7 @@ $(".removeBtn")
                         data: { roomId: id },
                         url: "../Admin/RemoveRoom/",
                         success: function() {
-                            $("#Room" + id).remove();
+                            $(`#Room${id}`).remove();
                             $("#tableDimmerIcon").removeClass("add circle");
                             $("#tableDimmerIcon").addClass("remove circle");
                             $("#tableDimmerText").text("Room successively deleted");
@@ -199,20 +176,9 @@ $("#addDesease")
                         url: "../Nurse/AddDesease/",
                         success: function(desease) {
                             $("#deseaseTableBody")
-                                .append('<tr id="desease' +
-                                    desease.id +
-                                    '">' +
-                                    "<td>" +
-                                    desease.name +
-                                    "</td>" +
-                                    '<td class="center aligned collapsed">' +
-                                    '  <a class="ui yellow basic button desease" book-id="' +
-                                    bookId +
-                                    '" desease-id="' +
-                                    desease.id +
-                                    '"><i class="remove circle icon"></i>Remove</a>' +
-                                    " </td>" +
-                                    "</tr>");
+                                .append(`<tr id="desease${desease.id}"><td>${desease.name
+                                    }</td><td class="center aligned collapsed">  <a class="ui yellow basic button desease" book-id="${bookId}" desease-id="${
+                                    desease.id}"><i class="remove circle icon"></i>Remove</a> </td></tr>`);
                         }
 
                     });
@@ -223,14 +189,14 @@ $("#addDesease")
     });
 $(".removeDesease")
     .click(function(e) {
-        var deseaseId = e.currentTarget.attributes["desease-id"].value;
-        var bookId = e.currentTarget.attributes["book-id"].value;
+        const deseaseId = e.currentTarget.attributes["desease-id"].value;
+        const bookId = e.currentTarget.attributes["book-id"].value;
         $.ajax({
             type: "POST",
             data: { id: bookId, deseaseId: deseaseId },
             url: "../Nurse/RemoveDesease/",
             success: function(id) {
-                $("#desease" + id).remove();
+                $(`#desease${id}`).remove();
             }
         });
     });
@@ -249,23 +215,11 @@ $("#addProcedureFrequency")
                         url: "../Nurse/AddProcedureFrequency/",
                         success: function(procedureFrequency) {
                             $("#proceduresFrequencyTableBody")
-                                .append('<tr id="procedureFrequency' +
-                                    procedureFrequency.id +
-                                    '">' +
-                                    "<td>" +
-                                    procedureFrequency.patientProcedure.name +
-                                    "</td>" +
-                                    "<td>" +
-                                    procedureFrequency.frequency +
-                                    "</td>" +
-                                    '<td class="center aligned collapsed">' +
-                                    ' <a class="ui yellow basic button procedureFrequencyDelete" book-id="' +
-                                    $("#bookId").val() +
-                                    '" procedureFrequency-id="' +
-                                    procedureFrequency.id +
-                                    '"><i class="remove circle icon"></i>Delete</a>' +
-                                    " </td>" +
-                                    " </tr>");
+                                .append(`<tr id="procedureFrequency${procedureFrequency.id}"><td>${
+                                    procedureFrequency.patientProcedure.name}</td><td>${procedureFrequency.frequency
+                                    }</td><td class="center aligned collapsed"> <a class="ui yellow basic button procedureFrequencyDelete" book-id="${$("#bookId").val()
+                                    }" procedureFrequency-id="${procedureFrequency.id
+                                    }"><i class="remove circle icon"></i>Delete</a> </td> </tr>`);
                         }
                     });
                 }
@@ -275,13 +229,13 @@ $("#addProcedureFrequency")
     });
 $(".procedureFrequencyDelete")
     .click(function(e) {
-        var procedureFrequencyId = e.currentTarget.attributes["procedureFrequency-id"].value;
+        const procedureFrequencyId = e.currentTarget.attributes["procedureFrequency-id"].value;
         $.ajax({
             type: "POST",
             data: { procedureFrequencyId: procedureFrequencyId },
             url: "../Nurse/DeleteProcedureFrequency/",
             success: function(procedureFrequency) {
-                $("#procedureFrequency" + procedureFrequency).remove();
+                $(`#procedureFrequency${procedureFrequency}`).remove();
             }
         });
     });
@@ -294,101 +248,105 @@ $("#searchPatientByName")
     .keyup(function() {
         var currentValue = $("#searchPatientByName").val();
         tablePatientsFullName = currentValue;
-        var flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
+        const flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
         if (flag) {
             $.each(patients,
                 function(index, value) {
                     if (!tablePatientsGender) {
                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
                             currentValue) {
-                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
                         } else {
-                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
                         }
                     } else {
                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
                             currentValue &&
                             patients[index].gender === tablePatientsGender) {
-                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
                         } else {
-                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
                         }
                     }
                 });
         } else {
             var isSeen = tablePatientsType == "Unseen" ? false : true;
             $.each(patients,
-                 function (index, value) {
-                     if (!tablePatientsGender) {
-                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                             currentValue && patients[index].seenByNurse.toString() == isSeen.toString()) {
-                             $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                         } else {
-                             $("#Patient" + patients[index].id).attr("style", "display:none");
-                         }
-                     } else {
-                         if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
-                             currentValue &&
-                             patients[index].gender === tablePatientsGender && patients[index].seenByNurse.toString() == isSeen.toString()) {
-                             $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                         } else {
-                             $("#Patient" + patients[index].id).attr("style", "display:none");
-                         }
-                     }
-                 });
+                function(index, value) {
+                    if (!tablePatientsGender) {
+                        if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                            currentValue &&
+                            patients[index].seenByNurse.toString() == isSeen.toString()) {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                        } else {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                        }
+                    } else {
+                        if (patients[index].fullName.substring(0, $("#searchPatientByName").val().length) ===
+                            currentValue &&
+                            patients[index].gender === tablePatientsGender &&
+                            patients[index].seenByNurse.toString() == isSeen.toString()) {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                        } else {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                        }
+                    }
+                });
         }
     });
 $(".genderSort")
     .click(function(e) {
         var currentGender = e.currentTarget.attributes["data-text"].value;
         tablePatientsGender = currentGender;
-        var flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
+        const flag = tablePatientsType == "All" || tablePatientsType == undefined ? true : false;
         if (flag) {
             $.each(patients,
                 function(index, value) {
                     if (!tablePatientsFullName) {
                         if (patients[index].gender === currentGender) {
-                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
                         } else {
-                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
                         }
                     } else {
                         if (patients[index].gender === currentGender &&
                             patients[index].fullName.substring(0, tablePatientsFullName.length) ===
                             tablePatientsFullName) {
-                            $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
                         } else {
-                            $("#Patient" + patients[index].id).attr("style", "display:none");
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
                         }
                     }
                 });
         } else {
             var isSeen = tablePatientsType == "Unseen" ? false : true;
             $.each(patients,
-               function (index, value) {
-                   if (!tablePatientsFullName) {
-                       if (patients[index].gender === currentGender&&patients[index].seenByNurse.toString() == isSeen.toString()) {
-                           $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                       } else {
-                           $("#Patient" + patients[index].id).attr("style", "display:none");
-                       }
-                   } else {
-                       if (patients[index].gender === currentGender &&
-                           patients[index].fullName.substring(0, tablePatientsFullName.length) ===
-                           tablePatientsFullName && patients[index].seenByNurse.toString() == isSeen.toString()) {
-                           $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                       } else {
-                           $("#Patient" + patients[index].id).attr("style", "display:none");
-                       }
-                   }
-               });
+                function(index, value) {
+                    if (!tablePatientsFullName) {
+                        if (patients[index].gender === currentGender &&
+                            patients[index].seenByNurse.toString() == isSeen.toString()) {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                        } else {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                        }
+                    } else {
+                        if (patients[index].gender === currentGender &&
+                            patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                            tablePatientsFullName &&
+                            patients[index].seenByNurse.toString() == isSeen.toString()) {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                        } else {
+                            $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                        }
+                    }
+                });
         }
     });
 $(".settleBtn")
-    .click(function (e) {
-        var fullName = e.currentTarget.attributes["patient-name"].value;
+    .click(function(e) {
+        const fullName = e.currentTarget.attributes["patient-name"].value;
         $("#patientId").val(e.currentTarget.attributes.id.value);
-        var gender = e.currentTarget.attributes["patient-gender"].value;
+        const gender = e.currentTarget.attributes["patient-gender"].value;
         $("#patientModalName").text(fullName + "," + gender);
         $("#settlePatientModal")
             .modal({
@@ -396,33 +354,35 @@ $(".settleBtn")
                 onDeny: function() {
                     return true;
                 },
-                onApprove: function () {
+                onApprove: function() {
                     $.ajax({
                         type: "POST",
                         data: $("#singlePatientSettleForm").serialize(),
                         url: "../Admin/SettlePatient/",
-                        success: function (data) {
-                            $("#patient" + data.patient + "Settle").removeClass("negative");
-                            $("#patient" + data.patient + "Settle").addClass("positive");
-                            $("#patient" + data.patient + "Settle").html("True");
-                            $("#option" + data.patient).remove();
-                            $("#room" + data.room).remove();
-                            $("#room" + data.room+"Modal").remove();
+                        success: function(data) {
+                            $(`#patient${data.patient}Settle`).removeClass("negative");
+                            $(`#patient${data.patient}Settle`).addClass("positive");
+                            $(`#patient${data.patient}Settle`).html("True");
+                            $(`#option${data.patient}`).remove();
+                            $(`#room${data.room}`).remove();
+                            $(`#room${data.room}Modal`).remove();
                         }
                     });
-                }})
+                }
+            })
             .modal("setting", "transition", "scale")
             .modal("show");
     });
+
 function GenerateRandomPalette() {
-    return '#' + Math.floor(Math.random() * 16777215).toString(16);
+    return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 };
 
 $(".infoBtn")
-    .click(function (e) {
+    .click(function(e) {
         var patient = {};
         console.log(e.currentTarget.attributes["id"].value);
-        for (var i = 0; i < patients.length; i++) {
+        for (let i = 0; i < patients.length; i++) {
             if (patients[i].id == e.currentTarget.attributes["id"].value) {
                 patient = patients[i];
                 break;
@@ -454,53 +414,102 @@ $(".seenSort")
         var flag = tablePatientsType == "Unseen" ? false : true;
         if (tablePatientsGender != "" && tablePatientsFullName != "") {
             $.each(patients,
-             function (index, value) {
-                 if (patients[index].gender === tablePatientsGender && patients[index].fullName.substring(0, tablePatientsFullName.length) ===
-                       tablePatientsFullName && patients[index].seenByNurse.toString() == flag.toString()) {
-                         $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                     } else {
-                         $("#Patient" + patients[index].id).attr("style", "display:none");
-                     }
-                
-             });
-        }
-        else if (tablePatientsGender == "" && tablePatientsFullName == "") {
-            $.each(patients,
-           function (index, value) {
-               if (patients[index].seenByNurse.toString() == flag.toString()) {
-                   $("#Patient" + patients[index].id).attr("style", "display:table-row");
-               } else {
-                   $("#Patient" + patients[index].id).attr("style", "display:none");
-               }
+                function(index, value) {
+                    if (patients[index].gender === tablePatientsGender &&
+                        patients[index].fullName.substring(0, tablePatientsFullName.length) ===
+                        tablePatientsFullName &&
+                        patients[index].seenByNurse.toString() == flag.toString()) {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                    } else {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                    }
 
-           });
-        }
-        else if (tablePatientsGender == "") {
+                });
+        } else if (tablePatientsGender == "" && tablePatientsFullName == "") {
+            $.each(patients,
+                function(index, value) {
+                    if (patients[index].seenByNurse.toString() == flag.toString()) {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                    } else {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                    }
+
+                });
+        } else if (tablePatientsGender == "") {
             $.each(patients,
                 function(index, value) {
                     if (patients[index].fullName.substring(0, tablePatientsFullName.length) ===
                         tablePatientsFullName &&
                         patients[index].seenByNurse.toString() == flag.toString()) {
-                        $("#Patient" + patients[index].id).attr("style", "display:table-row");
+                        $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
                     } else {
-                        $("#Patient" + patients[index].id).attr("style", "display:none");
+                        $(`#Patient${patients[index].id}`).attr("style", "display:none");
                     }
 
                 });
         } else {
             $.each(patients,
-            function (index, value) {
-                if (patients[index].gender === tablePatientsGender &&  patients[index].seenByNurse.toString() == flag.toString()) {
-                    $("#Patient" + patients[index].id).attr("style", "display:table-row");
-                } else {
-                    $("#Patient" + patients[index].id).attr("style", "display:none");
-                }
+                function(index, value) {
+                    if (patients[index].gender === tablePatientsGender &&
+                        patients[index].seenByNurse.toString() == flag.toString()) {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:table-row");
+                    } else {
+                        $(`#Patient${patients[index].id}`).attr("style", "display:none");
+                    }
 
-            });
+                });
         }
     });
 $(".updateProcedureInfo")
     .click(function(e) {
         console.log(e);
-        $("#updateProcedureModal").modal("show");
+        const prevName = e.currentTarget.attributes["procedure-name"].value;
+        const prevPrice = e.currentTarget.attributes["procedure-price"].value;
+        const procedureId = e.currentTarget.attributes["procedure-id"].value;
+        $("#updateName").val(prevName);
+        $("#updatePrice").val(prevPrice);
+        $("#updateProcedureId").val(procedureId);
+        $("#updateProcedureModal")
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    $.ajax({
+                        type: "POST",
+                        data: $("#updateProcedureForm").serialize(),
+                        url: "../Nurse/UpdateProcedure/",
+                        success: function(procedure) {
+                            $(`#procedure${procedure.id}Name`).text(procedure.name);
+                            $(`#procedure${procedure.id}Price`).text(procedure.price);
+                            e.currentTarget.attributes["procedure-price"].value = procedure.price;
+                            e.currentTarget.attributes["procedure-name"].value = procedure.name;
+                        }
+                    });
+                }
+            })
+            .modal("show");
+    });
+$(".removeProcedure")
+    .click(function(e) {
+        var id = e.currentTarget.attributes["procedure-id"].value;
+        $("#removeProcedureModal")
+            .modal({
+                closable: true,
+                onDeny: function() {
+                    return true;
+                },
+                onApprove: function() {
+                    $.ajax({
+                        type: "POST",
+                        data: { id: id },
+                        url: "../Nurse/RemoveProcedure/",
+                        success: function(procedureId) {
+                            $(`#procedure${procedureId}Tr`).remove();
+                        }
+                    });
+                }
+            })
+            .modal("show");
     });

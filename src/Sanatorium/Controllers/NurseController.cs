@@ -23,18 +23,19 @@ namespace Sanatorium.Controllers
             return View(model);
         }
 
-        public async Task<JsonResult> AppendProcedure(int price, string name)
+        public async Task AppendProcedure(int price, string name)
         {
             var procedure = new Procedure(price, name);
             Db.Procedures.Add(procedure);
 
             await Db.SaveChangesAsync();
-            return Json(procedure);
         }
 
-        public async Task RemoveProcedure(int procedureId)
+        public async Task<int> RemoveProcedure(int id)
         {
-            Db.Procedures.Remove(await Db.Procedures.SingleOrDefaultAsync(p => p.Id == procedureId));
+            Db.Procedures.Remove(await Db.Procedures.SingleOrDefaultAsync(p => p.Id == id));
+            await Db.SaveChangesAsync();
+            return id;
         }
 
         public async Task<JsonResult> UpdateProcedure(int procedureId, int price, string name)
