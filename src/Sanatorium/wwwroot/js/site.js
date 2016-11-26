@@ -499,3 +499,8 @@ $(".seenSort")
             });
         }
     });
+$(".updateProcedureInfo")
+    .click(function(e) {
+        console.log(e);
+        $("#updateProcedureModal").modal("show");
+    });

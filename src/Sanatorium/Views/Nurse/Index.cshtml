@@ -26,8 +26,8 @@
                     <td class="collapsing">
                         @procedure.Name
                     </td>
-                    <td class="right aligned collapsing">@procedure.Price</td>
-                    <td>Какие то действия</td>
+                    <td>@procedure.Price</td>
+                    <td class="center aligned collapsed"><button class="ui teal basic updateProcedureInfo button">Update Info</button></td>
                 </tr>
             }
             </tbody>
@@ -154,6 +154,30 @@
         <div class="center">
             <h1>Procedure successively added</h1>
         </div>
+    </div>
+</div>
+<div class="ui modal" id="updateProcedureModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Update Procedure
+    </div>
+    <div class="content">
+        <form id="updateprocedureForm">
+            <div class="ui left icon input">
+                <input type="text" placeholder="Name" name="name" id="updateName">
+                <i class="users icon"></i>
+            </div>
+            <br />
+            <br />
+            <div class="ui left icon input">
+                <input type="text" placeholder="Price" name="price" id="updateprice">
+                <i class="money icon"></i>
+            </div>
+        </form>
+    </div>
+    <div class="actions">
+        <div class="ui  basic red button cancel" >Cancel</div>
+        <div class="ui green basic button ok" >Update</div>
     </div>
 </div>
 @section scripts{   
