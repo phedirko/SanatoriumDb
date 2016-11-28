@@ -6,6 +6,7 @@ using Sanatorium.Data;
 using Sanatorium.Models;
 using Sanatorium.Models.AdminViewModels;
 using System.Linq;
+using System;
 
 namespace Sanatorium.Controllers
 {
@@ -16,11 +17,14 @@ namespace Sanatorium.Controllers
         public AdminController(ApplicationDbContext db)
         {
             Db = db;
+           
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel(await Db.Rooms.ToListAsync(), await Db.Patients.ToListAsync());
+            Db.Patients.RemoveRange(Db.Patients.Where(p => p.When.AddDays(p.Days) < DateTime.Now));
+            await Db.SaveChangesAsync();
+            var model = new IndexViewModel(await Db.Rooms.ToListAsync(), await Db.Patients.ToListAsync());          
             return View(model);
         }
 
@@ -57,10 +61,10 @@ namespace Sanatorium.Controllers
             return await Db.Rooms.ToArrayAsync();
         }
 
-        public async Task<JsonResult> RegisterPatient(string fullName, string gender)
+        public async Task<JsonResult> RegisterPatient(string fullName, string gender,int days)
         {
             var book = new PatientBook(fullName);
-            var patient = new Patient(fullName, gender, book);
+            var patient = new Patient(fullName, gender, book,days);
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
             return Json(patient);

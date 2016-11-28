@@ -23,6 +23,16 @@ namespace Sanatorium.Models
 
             Gender = gender;
         }
+        public Patient(string fullName, string gender, PatientBook book,int days)
+        {
+            FullName = fullName;
+
+            Book = book;
+
+            Gender = gender;
+
+            Days = days;
+        }
 
         public int Id { get; set; }
 

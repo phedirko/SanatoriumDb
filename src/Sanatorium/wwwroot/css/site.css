@@ -43,6 +43,6 @@ textarea { max-width: 280px; }
     /* Hide captions */
     .carousel-caption { display: none }
 }
-/*.regNav{
+.regNav{
     margin-top:5px;
-}*/
+}

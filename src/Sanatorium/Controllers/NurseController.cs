@@ -25,6 +25,8 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> Index()
         {
+            Db.Patients.RemoveRange(Db.Patients.Where(p => p.When.AddDays(p.Days) < DateTime.Now));
+            await Db.SaveChangesAsync();
             var model = new IndexViewModel(await Db.Procedures.ToListAsync(),await Db.Patients.Include(p=>p.Book).ToListAsync());
             return View(model);
         }
