@@ -132,11 +132,13 @@
 
                     <td class="center aligned collapsed">
                         <a class="ui yellow basic button " href="~/Nurse/PatientBook?id=@patient.Book.Id&patientId=@patient.Id">Details</a>
+                        <div class="ui basic teal button bookReport" patient-id="@patient.Book.Id">Download report</div>
                     </td>
                 </tr>
             }
             </tbody>
         </table>
+        <button class="ui basic orange button fluid" id="allPatientsReport">Download Report About Patients</button>
     </div>
 </div>
 <h4 class="ui horizontal divider header">
@@ -152,7 +154,8 @@
         <canvas id="anotherChart"></canvas>
     </div>
 </div>
-<button id="2">asdsa</button>
+@*<button id="test11">asdsa</button>
+<div id="test"></div>*@
 <div class="ui page dimmer" id="procedureAddedDimmer">
     <div class="content">
         <div class="center">

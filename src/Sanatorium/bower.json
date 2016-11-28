@@ -8,6 +8,7 @@
     "semantic": "2.1.8",
     "jquery.cookie": "1.4.1",
     "Chart.js": "2.0.2",
-    "downloadjs": ""
+    "downloadjs": "",
+    "json-human": "~0.1.1"
   }
 }

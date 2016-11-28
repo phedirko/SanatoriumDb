@@ -141,7 +141,13 @@ namespace Sanatorium.Controllers
         }
         public async Task<JsonResult> GetPatientsInfo()
         {
-            return Json(await Db.Patients.ToListAsync());
+            return Json(await Db.Patients.Include(p => p.Book.Procedures).ToListAsync());
+        }
+
+        public async Task<JsonResult> GetPatientBookInfo(int id)
+        {
+
+            return Json(await Db.PatientBooks.Select(a => new { a.Id,a.FullName, a.Deseases,a.Procedures}).SingleAsync(p => p.Id == id));
         }
     }
 }

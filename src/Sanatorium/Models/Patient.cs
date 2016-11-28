@@ -1,4 +1,6 @@
-﻿namespace Sanatorium.Models
+﻿using System;
+
+namespace Sanatorium.Models
 {
     public class Patient
     {
@@ -25,6 +27,10 @@
         public int Id { get; set; }
 
         public string FullName { get; set; }
+
+        public int Days { get; set; } = 7;
+
+        public DateTime When { get; set; } = DateTime.Now;
 
         public bool IsSettle { get; set; } = false;
 
