@@ -8,9 +8,10 @@ using Sanatorium.Data;
 namespace Sanatorium.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161129010058_asd42")]
+    partial class asd42
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -267,24 +268,6 @@ namespace Sanatorium.Data.Migrations
                     b.ToTable("ProceduresFrequency");
                 });
 
-            modelBuilder.Entity("Sanatorium.Models.ProceduresUpdate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Type");
-
-                    b.Property<int?>("UpdateProcedureId");
-
-                    b.Property<DateTime>("When");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UpdateProcedureId");
-
-                    b.ToTable("ProceduresUpdate");
-                });
-
             modelBuilder.Entity("Sanatorium.Models.Room", b =>
                 {
                     b.Property<int>("Id")
@@ -303,24 +286,6 @@ namespace Sanatorium.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Rooms");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.RoomUpdate", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Type");
-
-                    b.Property<int?>("UpdateRoomId");
-
-                    b.Property<DateTime>("When");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UpdateRoomId");
-
-                    b.ToTable("RoomUpdates");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -391,20 +356,6 @@ namespace Sanatorium.Data.Migrations
                     b.HasOne("Sanatorium.Models.Procedure", "PatientProcedure")
                         .WithMany()
                         .HasForeignKey("PatientProcedureId");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.ProceduresUpdate", b =>
-                {
-                    b.HasOne("Sanatorium.Models.Procedure", "UpdateProcedure")
-                        .WithMany()
-                        .HasForeignKey("UpdateProcedureId");
-                });
-
-            modelBuilder.Entity("Sanatorium.Models.RoomUpdate", b =>
-                {
-                    b.HasOne("Sanatorium.Models.Room", "UpdateRoom")
-                        .WithMany()
-                        .HasForeignKey("UpdateRoomId");
                 });
         }
     }

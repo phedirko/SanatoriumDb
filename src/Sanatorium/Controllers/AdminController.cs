@@ -51,7 +51,7 @@ namespace Sanatorium.Controllers
 
             room.Capacity = capacity;
             room.DailyPrice = dailyPrice;
-
+            Db.RoomUpdates.Add(new RoomUpdate(room));
             await Db.SaveChangesAsync();
             return Json(room);
         }
@@ -138,6 +138,16 @@ namespace Sanatorium.Controllers
         public async Task<Patient[]> GetAllPatients()
         {
             return await Db.Patients.ToArrayAsync();
+        }
+
+        [HttpGet]
+
+        public async Task<JsonResult> OrderPatientsByName(bool desc= false)
+        {
+            if (desc)
+                return Json(await Db.Patients.OrderBy(p => p.FullName).Select(p =>new { id = p.Id }).ToListAsync());
+            else
+                return Json(await Db.Patients.OrderByDescending(p => p.FullName).Select(p => new { id = p.Id }).ToListAsync());
         }
     }
 }

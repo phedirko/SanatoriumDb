@@ -8,9 +8,10 @@ using Sanatorium.Data;
 namespace Sanatorium.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20161129012830_updatess")]
+    partial class updatess
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.1")
@@ -272,8 +273,6 @@ namespace Sanatorium.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Type");
-
                     b.Property<int?>("UpdateProcedureId");
 
                     b.Property<DateTime>("When");
@@ -309,8 +308,6 @@ namespace Sanatorium.Data.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Type");
 
                     b.Property<int?>("UpdateRoomId");
 

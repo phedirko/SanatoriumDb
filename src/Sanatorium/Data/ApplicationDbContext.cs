@@ -23,6 +23,10 @@ namespace Sanatorium.Data
 
         public DbSet<Room> Rooms { get; set; }
 
+        public DbSet<RoomUpdate> RoomUpdates { get; set; }
+
+        public DbSet<ProceduresUpdate> ProceduresUpdate { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
