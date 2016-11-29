@@ -120,7 +120,7 @@
 </h4>
 <div class="ui grid">
     <div class="sixteen wide column">
-        <div class="ui selection dropdown">
+        <div class="ui selection dropdown ">
             <input type="hidden" name="gender" id="genderSort">
             <i class="dropdown icon"></i>
             <div class="default text">Gender</div>
@@ -136,7 +136,11 @@
             </div>
         </div>
         <div class="ui icon input">
-            <input type="text" placeholder="Search by FullName" id="searchPatientByName">
+            <input type="text" placeholder="Filter by FullName" id="searchPatientByName">
+            <i class="inverted circular search link icon"></i>
+        </div>
+        <div class="ui icon input">
+            <input type="text" placeholder="Search by FullName" id="searchPatientsByName">
             <i class="inverted circular search link icon"></i>
         </div>
     </div>
@@ -162,11 +166,11 @@
                     <td>@patient.Gender</td>
                     @if (patient.IsSettle)
                     {
-                        <td class="positive" id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                        <td  id="patient@(patient.Id)Settle">@patient.IsSettle</td>
                     }
                     else
                     {
-                        <td class="negative"  id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                        <td   id="patient@(patient.Id)Settle">@patient.IsSettle</td>
                     }
                         
                     <td class="center aligned collapsed">
@@ -189,6 +193,7 @@
     </div>
     <div class="six wide column" align="right">
         <h4>Settle patients</h4>
+       
         <form class="ui form" id="settlePatientsForm" onsubmit="return false;">
             <div class="field" id="test111">
 

@@ -562,3 +562,20 @@ $(".orderBy").click(function (e) {
         }
     });
 });
+$("#searchPatientsByName").keyup(function () {
+    $(patients).each(function (index,element) {
+        console.log(element.id);
+        $("#Patient" + element.id).removeClass("active");
+    });
+    var partOfName = $("#searchPatientsByName").val();
+    $.ajax({
+        type:"GET",
+        url : "/Admin/SearchPatients?partOfName="+partOfName,
+        success: function (data) {
+            $(data).each(function (index, element) {
+                console.log(element.id);
+                $("#Patient" + element.id).addClass("active");
+            });
+        }
+    });
+});

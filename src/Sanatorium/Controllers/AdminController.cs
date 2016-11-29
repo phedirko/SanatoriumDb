@@ -149,5 +149,11 @@ namespace Sanatorium.Controllers
             else
                 return Json(await Db.Patients.OrderByDescending(p => p.FullName).Select(p => new { id = p.Id }).ToListAsync());
         }
+        [HttpGet]
+
+        public async Task<JsonResult> SearchPatients(string partOfName)
+        {
+            return Json(await Db.Patients.Where(p => p.FullName.Substring(0, partOfName.Length) == partOfName).ToArrayAsync());
+        }
     }
 }
