@@ -11,6 +11,9 @@ $(document)
         $("#patientsSettle").dropdown();
         $("#roomSettle").dropdown();
         $(".ui.dropdown").dropdown();
+        $('.ui.checkbox')
+  .checkbox()
+        ;
         switch (window.location.pathname) {
         case "/Admin":
             $.ajax({
@@ -526,24 +529,48 @@ $("#allPatientsReport").click(function () {
     })
 });
 $(".bookReport").click(function (e) {
-    var id = e.currentTarget.attributes["patient-id"].value;
-    $.ajax({
-        url: "../Nurse/GetPatientBookInfo/"+id,
-        success: function (data) {
-            createReport(data);
-            console.log(JSON.stringify(data));
-            
+    $("#downloadFormatModal").modal({
+        closable: true,
+        onDeny: function () {
+            return true;
+        },
+        onApprove: function () {
+            var format=$("#fileFormat").val();
+            var id = e.currentTarget.attributes["patient-id"].value;
+            $.ajax({
+                url: "../Nurse/GetPatientBookInfo/" + id,
+                success: function (data) {
+                    createReport(data,format);
+                    console.log(JSON.stringify(data));
+
+                }
+            });
         }
-    });
-    console.log(id);
-    console.log(e);
+    }).modal("show");
+   
+    //console.log(id);
+    //console.log(e);
 });
 function createReport(data, format) {
-    //Rabotaet ne trogaj)))
     var document1 = "<html><head><style>.jh-root, .jh-type-object, .jh-type-array, .jh-key, .jh-value, .jh-root tr{ -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */ -moz-box-sizing: border-box; /* Firefox, other Gecko */ box-sizing: border-box; /* Opera/IE 8+ */ font-weight: bold; } .jh-key, .jh-value{ margin: 0; padding: 0.2em; font-weight: bold; } .jh-value{ border-left: 1px solid #ddd; } .jh-type-number{ text-align: center; color: #5286BC; } .jh-type-bool-true{ text-align: center; color: #5A811C; } .jh-type-bool-false{ text-align: center; color: #D45317; } .jh-type-bool-image { width: 20px; height: 20px; margin-right: 5px; vertical-align: bottom; } .jh-type-string{ font-style: italic; color: #6E6E6E; } .jh-array-key{ font-style: italic; font-size: small; text-align: center; } .jh-object-key, .jh-array-key{ color: #444; vertical-align: top; } .jh-type-object > tbody > tr:nth-child(odd), .jh-type-array > tbody > tr:nth-child(odd){ background-color: #f5f5f5; } .jh-type-object > tbody > tr:nth-child(even), .jh-type-array > tbody > tr:nth-child(even){ background-color: #fff; } .jh-type-object, .jh-type-array{ width: 100%; border-collapse: collapse; } .jh-root{ border: 1px solid #ccc; margin: 0.2em; } th.jh-key{ text-align: left; } .jh-type-object > tbody > tr, .jh-type-array > tbody > tr{ border: 1px solid #ddd; border-bottom: none; } .jh-type-object > tbody > tr:last-child, .jh-type-array > tbody > tr:last-child{ border-bottom: 1px solid #ddd; } .jh-type-object > tbody > tr:hover, .jh-type-array > tbody > tr:hover{ border: 1px solid #F99927; } .jh-empty{ font-style: italic; color: #999; font-size: small; } .jh-a { text-decoration: none; } .jh-a:hover{ text-decoration: underline; } .jh-a span.jh-type-string { text-decoration: none; color : #268ddd; font-style: normal; }</style></head><body>"
     var node = JsonHuman.format(data);
     document1 += "<br/>" + node.innerHTML + "</body></html>";
-    download(new Blob([document1.bold()]), "report.html", "text/html");
+    //Rabotaet ne trogaj)))
+    switch (format) {
+        case "html":
+            download(new Blob([document1.bold()]), "report.html", "text/html");
+            break;
+        case "doc":
+            download(new Blob([document1.bold()]), "report.doc", "text/doc");
+            break;
+        case "docx":
+            download(new Blob([document1.bold()]), "report.docx", "text/docx");
+            break;
+        default:
+            break;
+    }
+    
+    
 }
 $(".orderBy").click(function (e) {
     var flag = true;

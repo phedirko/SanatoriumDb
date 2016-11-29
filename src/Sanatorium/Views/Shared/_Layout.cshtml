@@ -54,6 +54,35 @@
 </div>
 <div class="pusher">
     <div class="ui container">
+        <div class="ui modal" id="downloadFormatModal">
+            <i class="close icon"></i>
+            <div class="header">
+                Choose format of report
+            </div>
+            <div class="content">
+                <form id="downloadFormat">
+                    <div class="ui form">
+                        <div class="field">
+                            <label>Format</label>
+                            <div class="ui selection dropdown">
+                                <input type="hidden" name="format" id="fileFormat">
+                                <i class="dropdown icon"></i>
+                                <div class="default text">Format</div>
+                                <div class="menu">
+                                    <div class="item" data-value="html">HTML</div>
+                                    <div class="item" data-value="doc">DOC</div>
+                                    <div class="item" data-value="docx">DOCX</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="actions">
+                <div class="ui  basic button cancel">Cancel</div>
+                <div class="ui green basic button ok">Download</div>
+            </div>
+        </div>
         <br />
         <div class="ui grid fixed top menu" >
             
