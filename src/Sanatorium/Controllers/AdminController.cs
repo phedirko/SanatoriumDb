@@ -51,7 +51,7 @@ namespace Sanatorium.Controllers
 
             room.Capacity = capacity;
             room.DailyPrice = dailyPrice;
-            Db.RoomUpdates.Add(new RoomUpdate(room));
+            Db.RoomUpdates.Add(new RoomUpdate(room, "Room"));
             await Db.SaveChangesAsync();
             return Json(room);
         }

@@ -26,6 +26,11 @@ namespace Sanatorium.Models
         {
             UpdateProcedure = procedure;
         }
-     
+        public ProceduresUpdate(Procedure procedure,string type)
+        {
+            UpdateProcedure = procedure;
+
+            Type = type;
+        }
     }
 }

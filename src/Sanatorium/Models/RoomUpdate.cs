@@ -24,7 +24,12 @@ namespace Sanatorium.Models
         {
             UpdateRoom = room;
         }
+        public RoomUpdate(Room room,string type)
+        {
+            UpdateRoom = room;
 
-        
+            Type = type;
+        }
+
     }
 }

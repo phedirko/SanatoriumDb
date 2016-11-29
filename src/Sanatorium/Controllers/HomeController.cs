@@ -27,8 +27,22 @@ namespace Sanatorium.Controllers
         {
             List<IUpdate> model = await Db.ProceduresUpdate.Cast<IUpdate>().ToListAsync();
             model.AddRange(await Db.RoomUpdates.Cast<IUpdate>().ToListAsync());
-            model.OrderByDescending(u => u.When);
+            model.OrderBy(u => u.When);
             return Json(model);
+        }
+        [HttpGet]
+
+        public async Task <JsonResult> GetLatestRoomsPriceList()
+        {
+            var priceList =await Db.Rooms.Select(r => new { Capacity = r.Capacity, Price = r.DailyPrice, }).ToArrayAsync();
+            return Json(priceList);
+        }
+        [HttpGet]
+
+        public async Task<JsonResult> GetLatestProceduresPriceList()
+        {
+            var priceList = await Db.Procedures.Select(p => new { Name = p.Name, Price = p.Price, }).ToArrayAsync();
+            return Json(priceList);
         }
         public IActionResult About()
         {

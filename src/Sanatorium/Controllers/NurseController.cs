@@ -51,7 +51,7 @@ namespace Sanatorium.Controllers
             var procedure = await Db.Procedures.SingleOrDefaultAsync(p => p.Id == procedureId);
             procedure.Name = name;
             procedure.Price = price;
-            Db.ProceduresUpdate.Add(new ProceduresUpdate(procedure));
+            Db.ProceduresUpdate.Add(new ProceduresUpdate(procedure, "Procedure"));
             await Db.SaveChangesAsync();
             return Json(procedure);
         }
