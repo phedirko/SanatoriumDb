@@ -5,6 +5,7 @@ var tablePatientsGender = "";
 var tablePatientsFullName = "";
 var tablePatientsType;
 var onlyUnSeenPatients = false;
+var importFile = "";
 $(document)
     .ready(function() {
         $("#adminRegisterGender").dropdown();
@@ -616,4 +617,28 @@ $("#searchPatientsByName").keyup(function () {
             });
         }
     });
+});
+$("#importBtn").click(function () {
+   
+    console.log(importFile.FullName);
+    $.ajax({
+        type: "POST",
+        data: importFile,
+        url:"../Admin/ImportPatientFromFile/",
+        //url: "../Admin/ImportPatientFromFile?FullName="+importFile.FullName+"&Days="+importFile.Days+"&Gender="+importFile.Gender,
+        success: function (dataa) {
+            window.location.reload();
+        }
+
+    })
+
+});
+$(document).on('change', '#patientFile', function (event) {
+    var reader = new FileReader();
+    reader.onload = function (event) {
+        var jsonObj = JSON.parse(event.target.result);
+        importFile = jsonObj;
+    }
+   reader.readAsText(event.target.files[0]);
+    //console.log(reader.readAsText(event.target.files[0]));
 });

@@ -155,5 +155,12 @@ namespace Sanatorium.Controllers
         {
             return Json(await Db.Patients.Where(p => p.FullName.Substring(0, partOfName.Length) == partOfName).ToArrayAsync());
         }
+        [HttpPost]
+        public async Task ImportPatientFromFile (string FullName,int Days,string Gender)
+        {
+            var patient = new Patient(FullName, Gender, Days);
+            Db.Patients.Add(patient);
+            await Db.SaveChangesAsync();
+        } 
     }
 }

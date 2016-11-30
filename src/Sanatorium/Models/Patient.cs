@@ -34,6 +34,17 @@ namespace Sanatorium.Models
             Days = days;
         }
 
+        public Patient(string fullName, string gender, int days)
+        {
+            FullName = fullName;
+
+            Book = new PatientBook(fullName);
+
+            Gender = gender;
+
+            Days = days;
+        }
+
         public int Id { get; set; }
 
         public string FullName { get; set; }
