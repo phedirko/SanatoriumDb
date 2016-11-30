@@ -113,6 +113,16 @@
                 </div>
         </form>
     </div>
+    <div class="eight wide column" align="justify">
+        <h3>Import From File</h3>
+
+        <form id="importPatients">
+            <input type="file" class="ui basic button fluid"/>
+            <br />
+            <br />
+            <div class="ui basic orange button">Import</div>
+        </form>
+    </div>
 </div>
 <h4 class="ui horizontal divider header">
     <i class="write icon"></i>
@@ -282,13 +292,13 @@
     <div class="content">
         <form id="updateRoomForm">
             <div class="ui left icon input">
-                <input type="text" placeholder="Capacity" name="capacity" id="updateCapacity">
+                <input type="number" placeholder="Capacity" name="capacity" id="updateCapacity">
                 <i class="users icon"></i>
             </div>
             <br/>
             <br/>
             <div class="ui left icon input">
-                <input type="text" placeholder="Daily Price" name="dailyPrice" id="updateDailyPrice">
+                <input type="number" placeholder="Daily Price" name="dailyPrice" id="updateDailyPrice">
                 <i class="money icon"></i>
             </div>
         </form>
