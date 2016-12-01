@@ -151,5 +151,11 @@ namespace Sanatorium.Controllers
 
             return Json(await Db.PatientBooks.Select(a => new { a.Id,a.FullName, a.Deseases,a.Procedures}).SingleAsync(p => p.Id == id));
         }
+        [HttpGet]
+        public async Task<JsonResult> GetAllDeseases()
+        {
+            var deseases = await Db.Deseases.ToListAsync();
+            return Json(deseases);
+        }
     }
 }
