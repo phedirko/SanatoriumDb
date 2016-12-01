@@ -65,11 +65,14 @@ namespace Sanatorium.Controllers
                 patient.SeenByNurse = true;
                 await Db.SaveChangesAsync();
             }
-            var model = new PatientBookViewModel(await Db.PatientBooks.Include(b=>b.Deseases).Include(b=>b.Procedures).SingleOrDefaultAsync(b=>b.Id == id),await Db.Procedures.ToListAsync());
+            var model = new PatientBookViewModel(
+                await Db.PatientBooks.Include(b=>b.Deseases).Include(b=>b.Procedures).SingleOrDefaultAsync(b=>b.Id == id),
+                await Db.Procedures.ToListAsync(),
+                await Db.Deseases.ToListAsync());
             return View(model);
         }
         [HttpPost]
-        public async Task<JsonResult> AddDesease(int id, string desease)
+        public async Task<JsonResult> AddDesease(int id, string desease,int deseaseId)
         {
             var patientBook = await Db.PatientBooks.SingleOrDefaultAsync(p => p.Id == id);
             var newDesease = new Desease(desease);
@@ -154,7 +157,7 @@ namespace Sanatorium.Controllers
         [HttpGet]
         public async Task<JsonResult> GetAllDeseases()
         {
-            var deseases = await Db.Deseases.ToListAsync();
+            var deseases = await Db.Deseases.Select(x=>new { name = x.Name,value = x.Id,text = x.Name}).ToListAsync();
             return Json(deseases);
         }
     }

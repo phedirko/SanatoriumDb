@@ -87,6 +87,12 @@ $("#addProcedureBtn")
 $(".updateBtn")
     .click(function(e) {
         var id = e.target.id;
+        $(rooms).each(function (index,element) {
+            if (element.id == id) {
+                $("#updateCapacity").val(element.capacity);
+                $("#updateDailyPrice").val(element.dailyPrice);
+            }
+        });
         $("#updateRoomModal")
             .modal({
                 closable: true,

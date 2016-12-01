@@ -2,6 +2,7 @@
 /// <reference path="js/adminstat.js" />
 /// <reference path="js/homeindex.js" />
 /// <reference path="js/nursestat.js" />
+/// <reference path="js/patientbook.js" />
 /// <reference path="js/site.js" />
 /// <reference path="lib/chart.js/dist/Chart.js" />
 /// <reference path="lib/downloadjs/download.js" />

@@ -91,7 +91,7 @@
                 </div>
             <div class="field eight wide">
                 <label>Days</label>
-                <input type="text" placeholder="Days on sanatorium" name="days" id="days">
+                <input type="number" placeholder="Days on sanatorium" name="days" id="days" min="1">
             </div>
                 <div class="field eight wide">
                     <label>Gender</label>
@@ -292,13 +292,13 @@
     <div class="content">
         <form id="updateRoomForm">
             <div class="ui left icon input">
-                <input type="number" placeholder="Capacity" name="capacity" id="updateCapacity">
+                <input type="number" placeholder="Capacity" name="capacity" id="updateCapacity" min="1">
                 <i class="users icon"></i>
             </div>
             <br/>
             <br/>
             <div class="ui left icon input">
-                <input type="number" placeholder="Daily Price" name="dailyPrice" id="updateDailyPrice">
+                <input type="number" placeholder="Daily Price" name="dailyPrice" id="updateDailyPrice" min="1">
                 <i class="money icon"></i>
             </div>
         </form>

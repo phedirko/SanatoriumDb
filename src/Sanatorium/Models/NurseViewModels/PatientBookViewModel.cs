@@ -11,6 +11,7 @@ namespace Sanatorium.Models.NurseViewModels
 
         public List<Procedure> Procedures { get; set; }
 
+        public List<Desease> Deseases { get; set; }
         public PatientBookViewModel()
         {
             
@@ -21,6 +22,15 @@ namespace Sanatorium.Models.NurseViewModels
             Book = book;
 
             Procedures = procedures;
+        }
+
+        public PatientBookViewModel(PatientBook book, List<Procedure> procedures,List<Desease> deseases)
+        {
+            Book = book;
+
+            Procedures = procedures;
+
+            Deseases = deseases;
         }
     }
 }
