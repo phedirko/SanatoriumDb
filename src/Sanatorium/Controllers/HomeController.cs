@@ -15,35 +15,37 @@ namespace Sanatorium.Controllers
         public HomeController(ApplicationDbContext db)
         {
             Db = db;
-
         }
+
         public async Task<IActionResult> Index()
         {
-            
             return View();
         }
+
         [HttpGet]
-        public async Task <JsonResult> GetLatestUpdates()
+        public async Task<JsonResult> GetLatestUpdates()
         {
             List<IUpdate> model = await Db.ProceduresUpdate.Cast<IUpdate>().ToListAsync();
             model.AddRange(await Db.RoomUpdates.Cast<IUpdate>().ToListAsync());
             model.OrderBy(u => u.When);
             return Json(model);
         }
-        [HttpGet]
 
-        public async Task <JsonResult> GetLatestRoomsPriceList()
+        [HttpGet]
+        public async Task<JsonResult> GetLatestRoomsPriceList()
         {
-            var priceList =await Db.Rooms.Select(r => new { Capacity = r.Capacity, Price = r.DailyPrice, }).ToArrayAsync();
+            var priceList =
+                await Db.Rooms.Select(r => new {Capacity = r.Capacity, Price = r.DailyPrice,}).ToArrayAsync();
             return Json(priceList);
         }
-        [HttpGet]
 
+        [HttpGet]
         public async Task<JsonResult> GetLatestProceduresPriceList()
         {
-            var priceList = await Db.Procedures.Select(p => new { Name = p.Name, Price = p.Price, }).ToArrayAsync();
+            var priceList = await Db.Procedures.Select(p => new {Name = p.Name, Price = p.Price,}).ToArrayAsync();
             return Json(priceList);
         }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

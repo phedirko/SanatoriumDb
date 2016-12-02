@@ -6,74 +6,74 @@
 </h4>
 <div class="ui grid">
     <div class="twelve wide column">
-            <table class="ui celled striped table">
-                <thead>
-                <tr>
-                    <th colspan="3">
-                        Rooms
-                    </th>
+        <table class="ui celled striped table">
+            <thead>
+            <tr>
+                <th colspan="3">
+                    Rooms
+                </th>
+            </tr>
+            </thead>
+            <tbody id="roomTableBody">
+            @foreach (var room in Model.Rooms)
+            {
+                <tr id="Room@(room.Id)">
+                    <td class="collapsing" id="tdRoomNumber@(room.Id)">
+                        Room @room.RoomNumber
+                    </td>
+                    <td id="tdRoomInfo@(room.Id)">Stage @room.StageNumber,capacity @room.Capacity,daily price @room.DailyPrice</td>
+                    <td class="center aligned ">
+                        <button class="ui yellow basic button updateBtn" id="@room.Id">Update</button>
+                        <button class="ui red basic button removeBtn" id="@room.Id">Remove</button>
+                    </td>
                 </tr>
-                </thead>
-                <tbody id="roomTableBody">
-                @foreach (var room in Model.Rooms)
-                {
-                    <tr id="Room@(room.Id)">
-                        <td class="collapsing" id="tdRoomNumber@(room.Id)">
-                            Room @room.RoomNumber
-                        </td>
-                        <td id="tdRoomInfo@(room.Id)">Stage @room.StageNumber,capacity @room.Capacity,daily price @room.DailyPrice</td>
-                        <td class="center aligned ">
-                            <button class="ui yellow basic button updateBtn" id="@room.Id">Update</button>
-                            <button class="ui red basic button removeBtn" id="@room.Id">Remove</button>
-                        </td>
-                    </tr>
-                }
-                </tbody>
+            }
+            </tbody>
 
-            </table>
-            <div class="ui dimmer" id="tableDimmer">
-                <div class="content">
-                    <div class="center">
-                        <h2 class="ui inverted icon header">
-                            <i class="icon" id="tableDimmerIcon"></i>
-                            <text id="tableDimmerText">Room Deleted</text>
-                        </h2>
-                    </div>
+        </table>
+        <div class="ui dimmer" id="tableDimmer">
+            <div class="content">
+                <div class="center">
+                    <h2 class="ui inverted icon header">
+                        <i class="icon" id="tableDimmerIcon"></i>
+                        <text id="tableDimmerText">Room Deleted</text>
+                    </h2>
                 </div>
             </div>
+        </div>
 
     </div>
     <div class="four wide column" align="right">
 
         <form id="addRoomForm" onsubmit="return false;">
-                <h4>Add Room</h4>
-                <div class="ui left icon input">
-                    <input type="text" placeholder="Room Number" name="roomNumber" id="roomNumber">
-                    <i class="users icon"></i>
-                </div>
-                <br/>
-                <br/>
-                <div class="ui left icon input">
-                    <input type="text" placeholder="Stage Number" name="stageNumber" id="stageNumber">
-                    <i class="users icon"></i>
-                </div>
-                <br/>
-                <br/>
-                <div class="ui left icon input">
-                    <input type="text" placeholder="Capacity" name="capacity" id="capacity">
-                    <i class="users icon"></i>
-                </div>
-                <br/>
-                <br/>
-                <div class="ui left icon input">
-                    <input type="text" placeholder="Daily Price" name="dailyPrice" id="dailyPrice">
-                    <i class="money icon"></i>
-                </div>
-                <br/>
-                <br/>
-                <button class="ui basic blue button" id="addRoomBtn">
-                    Create
-                </button>
+            <h4>Add Room</h4>
+            <div class="ui left icon input">
+                <input type="text" placeholder="Room Number" name="roomNumber" id="roomNumber">
+                <i class="users icon"></i>
+            </div>
+            <br/>
+            <br/>
+            <div class="ui left icon input">
+                <input type="text" placeholder="Stage Number" name="stageNumber" id="stageNumber">
+                <i class="users icon"></i>
+            </div>
+            <br/>
+            <br/>
+            <div class="ui left icon input">
+                <input type="text" placeholder="Capacity" name="capacity" id="capacity">
+                <i class="users icon"></i>
+            </div>
+            <br/>
+            <br/>
+            <div class="ui left icon input">
+                <input type="text" placeholder="Daily Price" name="dailyPrice" id="dailyPrice">
+                <i class="money icon"></i>
+            </div>
+            <br/>
+            <br/>
+            <button class="ui basic blue button" id="addRoomBtn">
+                Create
+            </button>
         </form>
     </div>
 </div>
@@ -83,34 +83,34 @@
 </h4>
 <div class="ui grid">
     <div class="eight wide column">
-     
+
         <form class="ui form" id="registerPatientForm" onsubmit="return false;">
-                <div class="field eight wide">
-                    <label>Full Name</label>
-                    <input type="text" placeholder="Full Name" name="fullName" id="fullName">
-                </div>
+            <div class="field eight wide">
+                <label>Full Name</label>
+                <input type="text" placeholder="Full Name" name="fullName" id="fullName">
+            </div>
             <div class="field eight wide">
                 <label>Days</label>
                 <input type="number" placeholder="Days on sanatorium" name="days" id="days" min="1">
             </div>
-                <div class="field eight wide">
-                    <label>Gender</label>
-                    <div class="ui selection dropdown" id="adminRegisterGender">
-                        <input type="hidden" name="gender" id="gender">
-                        <i class="dropdown icon"></i>
-                        <div class="default text">Gender</div>
-                        <div class="menu">
-                            <div class="item" data-value="Male">Male</div>
-                            <div class="item" data-value="Female">Female</div>
-                        </div>
+            <div class="field eight wide">
+                <label>Gender</label>
+                <div class="ui selection dropdown" id="adminRegisterGender">
+                    <input type="hidden" name="gender" id="gender">
+                    <i class="dropdown icon"></i>
+                    <div class="default text">Gender</div>
+                    <div class="menu">
+                        <div class="item" data-value="Male">Male</div>
+                        <div class="item" data-value="Female">Female</div>
                     </div>
                 </div>
-                <div class="field">
-                    <br/>
-                    <button class="ui basic blue button" id="registerPatient">
-                        Register
-                    </button>
-                </div>
+            </div>
+            <div class="field">
+                <br/>
+                <button class="ui basic blue button" id="registerPatient">
+                    Register
+                </button>
+            </div>
         </form>
     </div>
     <div class="eight wide column" align="justify">
@@ -118,8 +118,8 @@
 
         <form id="importPatients">
             <input type="file" class="ui basic button fluid" accept=".json" id="patientFile" name="patient"/>
-            <br />
-            <br />
+            <br/>
+            <br/>
             <div class="ui basic orange button" id="importBtn">Import</div>
         </form>
     </div>
@@ -176,13 +176,13 @@
                     <td>@patient.Gender</td>
                     @if (patient.IsSettle)
                     {
-                        <td  id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                        <td id="patient@(patient.Id)Settle">@patient.IsSettle</td>
                     }
                     else
                     {
-                        <td   id="patient@(patient.Id)Settle">@patient.IsSettle</td>
+                        <td id="patient@(patient.Id)Settle">@patient.IsSettle</td>
                     }
-                        
+
                     <td class="center aligned collapsed">
                         <button class="ui yellow basic button infoBtn" id="@patient.Id">Info</button>
                         @if (patient.IsSettle)
@@ -193,7 +193,7 @@
                         {
                             <button class="ui red basic button settleBtn" id="@patient.Id" patient-name="@patient.FullName" patient-gender="@patient.Gender">Settle</button>
                         }
-                       
+
                     </td>
                 </tr>
             }
@@ -203,22 +203,22 @@
     </div>
     <div class="six wide column" align="right">
         <h4>Settle patients</h4>
-       
+
         <form class="ui form" id="settlePatientsForm" onsubmit="return false;">
             <div class="field" id="test111">
 
 
                 <select class="ui fluid search dropdown" multiple="" name="patientsId" id="patientsSettle">
                     <option value="">Patients</option>
-                    @foreach (var patient in Model.Patients.Where(p=>p.IsSettle == false))
+                    @foreach (var patient in Model.Patients.Where(p => p.IsSettle == false))
                     {
                         <option value="@patient.Id" id="option@(patient.Id)">@patient.FullName,@patient.Gender</option>
                     }
                 </select>
             </div>
             <div class="field">
-                <select class="ui fluid search dropdown"  name="roomId" id="roomSettle">
-                    @foreach (var room in Model.Rooms.Where(r=>r.HavePatients==false))
+                <select class="ui fluid search dropdown" name="roomId" id="roomSettle">
+                    @foreach (var room in Model.Rooms.Where(r => r.HavePatients == false))
                     {
                         <option value="@room.Id" id="room@(room.Id)">Room @room.RoomNumber,Stage @room.StageNumber,Capacity @room.Capacity,Price @room.DailyPrice</option>
                     }
@@ -241,11 +241,11 @@
 </div>
 <div class="ui grid">
     <div class="eight wide column">
-        <canvas id="genderChart" style="width: 100vw;height:30vh"></canvas>
+        <canvas id="genderChart" style="width: 100vw; height: 30vh"></canvas>
     </div>
     <div class="eight wide column">
         <div class="eight wide column">
-            <canvas id="settleChart" style="width: 100vw;height:30vh"></canvas>
+            <canvas id="settleChart" style="width: 100vw; height: 30vh"></canvas>
         </div>
     </div>
 </div>
@@ -264,8 +264,8 @@
 </div>
 <div class="ui modal" id="settlePatientModal">
     <i class="close icon"></i>
-    <div class="header" >
-       <h2 id="patientModalName"></h2>
+    <div class="header">
+        <h2 id="patientModalName"></h2>
     </div>
     <div class="content">
         <form id="singlePatientSettleForm">
@@ -280,8 +280,8 @@
         </form>
     </div>
     <div class="actions">
-        <div class="ui  basic red button cancel" >Cancel</div>
-        <div class="ui green basic button ok" >Settle</div>
+        <div class="ui  basic red button cancel">Cancel</div>
+        <div class="ui green basic button ok">Settle</div>
     </div>
 </div>
 <div class="ui modal" id="updateRoomModal">
@@ -325,12 +325,12 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
     <div class="actions">
         <div class="ui  basic red button cancel">Cancel</div>
         <div class="ui green basic button ok">Ok</div>
     </div>
 </div>
-@section scripts{  
-        <script src="~/js/adminStat.js"></script>
+@section scripts{
+    <script src="~/js/adminStat.js"></script>
 }

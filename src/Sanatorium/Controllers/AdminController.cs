@@ -17,12 +17,11 @@ namespace Sanatorium.Controllers
         public AdminController(ApplicationDbContext db)
         {
             Db = db;
-           
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = new IndexViewModel(await Db.Rooms.ToListAsync(), await Db.Patients.ToListAsync());          
+            var model = new IndexViewModel(await Db.Rooms.ToListAsync(), await Db.Patients.ToListAsync());
             return View(model);
         }
 
@@ -59,10 +58,10 @@ namespace Sanatorium.Controllers
             return await Db.Rooms.ToArrayAsync();
         }
 
-        public async Task<JsonResult> RegisterPatient(string fullName, string gender,int days)
+        public async Task<JsonResult> RegisterPatient(string fullName, string gender, int days)
         {
             var book = new PatientBook(fullName);
-            var patient = new Patient(fullName, gender, book,days);
+            var patient = new Patient(fullName, gender, book, days);
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
             return Json(patient);
@@ -139,26 +138,30 @@ namespace Sanatorium.Controllers
         }
 
         [HttpGet]
-
-        public async Task<JsonResult> OrderPatientsByName(bool desc= false)
+        public async Task<JsonResult> OrderPatientsByName(bool desc = false)
         {
             if (desc)
-                return Json(await Db.Patients.OrderBy(p => p.FullName).Select(p =>new { id = p.Id }).ToListAsync());
+                return Json(await Db.Patients.OrderBy(p => p.FullName).Select(p => new {id = p.Id}).ToListAsync());
             else
-                return Json(await Db.Patients.OrderByDescending(p => p.FullName).Select(p => new { id = p.Id }).ToListAsync());
+                return
+                    Json(await Db.Patients.OrderByDescending(p => p.FullName).Select(p => new {id = p.Id}).ToListAsync());
         }
-        [HttpGet]
 
+        [HttpGet]
         public async Task<JsonResult> SearchPatients(string partOfName)
         {
-            return Json(await Db.Patients.Where(p => p.FullName.Substring(0, partOfName.Length) == partOfName).ToArrayAsync());
+            return
+                Json(
+                    await
+                        Db.Patients.Where(p => p.FullName.Substring(0, partOfName.Length) == partOfName).ToArrayAsync());
         }
+
         [HttpPost]
-        public async Task ImportPatientFromFile (string FullName,int Days,string Gender)
+        public async Task ImportPatientFromFile(string FullName, int Days, string Gender)
         {
             var patient = new Patient(FullName, Gender, Days);
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
-        } 
+        }
     }
 }

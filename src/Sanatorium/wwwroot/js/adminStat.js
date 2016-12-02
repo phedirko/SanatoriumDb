@@ -30,12 +30,14 @@ $(document)
                             console.log(a);
                         },
                         scales: {
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    stepSize :1
+                            xAxes: [
+                                {
+                                    ticks: {
+                                        beginAtZero: true,
+                                        stepSize: 1
+                                    }
                                 }
-                            }]
+                            ]
                         }
                     }
                 });
@@ -60,13 +62,14 @@ $(document)
                         "#36A2EB",
                         "#FFCE56"
                     ]
-                }]
+                }
+            ]
         };
-       
+
         $.ajax({
             type: "GET",
             url: "../Admin/GetGenderStat/",
-            success: function (genderStat) {
+            success: function(genderStat) {
                 var genderDataValues = [];
                 var genders = [];
                 $(genderStat)
@@ -75,7 +78,7 @@ $(document)
                         genders.push(element.gender);
                     });
                 var genderData = {
-                    labels:genders,
+                    labels: genders,
                     datasets: [
                         {
                             data: genderDataValues,
@@ -84,20 +87,20 @@ $(document)
                                 GenerateRandomPalette(),
                                 GenerateRandomPalette()
                                 //"#FF6384"
-                                
                             ],
                             hoverBackgroundColor: [
                                 GenerateRandomPalette(),
                                 GenerateRandomPalette()
-                                
+
                                 // "#36A2EB",
                                 //"#FF6384"
-                               
                             ]
-                        }]
+                        }
+                    ]
                 };
                 var genderCtx = document.getElementById("genderChart");
-                var myDoughnutChart = new Chart(genderCtx, {
+                var myDoughnutChart = new Chart(genderCtx,
+                {
                     type: 'doughnut',
                     data: genderData
                 });
@@ -106,11 +109,11 @@ $(document)
         $.ajax({
             type: "GET",
             url: "../Admin/GetSettleStat/",
-            success: function (settleStat) {
+            success: function(settleStat) {
                 var settleDataValues = [];
                 var settle = [];
                 $(settleStat)
-                    .each(function (index, element) {
+                    .each(function(index, element) {
                         settleDataValues.push(element.value);
                         if (element.settle === true) {
                             settle.push("Settle");
@@ -128,7 +131,6 @@ $(document)
                                 GenerateRandomPalette(),
                                 GenerateRandomPalette()
                                 //"#FF6384"
-
                             ],
                             hoverBackgroundColor: [
                                 GenerateRandomPalette(),
@@ -136,16 +138,16 @@ $(document)
 
                                 // "#36A2EB",
                                 //"#FF6384"
-
                             ]
-                        }]
+                        }
+                    ]
                 };
                 var settleCtx = document.getElementById("settleChart");
-                var myDoughnutChart = new Chart(settleCtx, {
+                var myDoughnutChart = new Chart(settleCtx,
+                {
                     type: 'doughnut',
                     data: settleData
                 });
             }
         });
     });
-
