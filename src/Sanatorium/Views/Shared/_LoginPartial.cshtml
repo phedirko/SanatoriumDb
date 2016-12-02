@@ -3,30 +3,33 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
-            </li>
-            <li>
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button>
-            </li>
-        </ul>
-    </form>
+
+        <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" >
+            <div class="ui grid">
+                <div class="three wide column"></div>
+                <div class="six wide column regNav">
+                    <h3><a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a></h3>
+                </div>
+                <div class="four wide column">
+                    <button type="submit" class="basic ui button fluid grey">Log off</button>
+                </div>
+            </div>
+</form>
+    
 }
 else
 {
 
     <div class="ui grid">
         <div class="three wide column"></div>
-        <div class="six wide column right aligned regNav" >
-            <h3><i class="spy icon"></i><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></h3> 
+        <div class="six wide column right aligned regNav">
+            <h3><i class="spy icon"></i><a asp-area="" asp-controller="Account" asp-action="Register">Register</a></h3>
         </div>
         <div class="five wide column right aligned regNav">
-           
+
             <h3><i class="user icon"></i> <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a></h3>
         </div>
         <div class="two wide column"></div>
     </div>
- 
+
 }

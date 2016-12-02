@@ -91,6 +91,7 @@ $(".updateBtn")
             if (element.id == id) {
                 $("#updateCapacity").val(element.capacity);
                 $("#updateDailyPrice").val(element.dailyPrice);
+                return false;
             }
         });
         $("#updateRoomModal")
