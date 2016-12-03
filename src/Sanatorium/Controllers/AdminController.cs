@@ -7,11 +7,14 @@ using Sanatorium.Models;
 using Sanatorium.Models.AdminViewModels;
 using System.Linq;
 using System;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Sanatorium.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class AdminController : Controller
     {
+       
         public readonly ApplicationDbContext Db;
 
         public AdminController(ApplicationDbContext db)
@@ -162,6 +165,16 @@ namespace Sanatorium.Controllers
             var patient = new Patient(FullName, Gender, Days);
             Db.Patients.Add(patient);
             await Db.SaveChangesAsync();
+        }
+
+        public IActionResult ManageAdmins()
+        {
+            return View();
+        }
+
+        public IActionResult ManageNurses()
+        {
+            return View();
         }
     }
 }

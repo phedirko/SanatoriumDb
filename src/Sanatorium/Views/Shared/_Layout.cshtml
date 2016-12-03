@@ -40,10 +40,14 @@
 <div class="ui sidebar vertical menu">
     <br />
     <div class="item">
-        <div class="ui icon input">
-            <input type="text" placeholder="Search patient">
-            <i class="search icon"></i>
-        </div>
+       @if (User.IsInRole("NURSE"))
+       {
+           <a asp-controller="Nurse" asp-action="Index">Main</a>
+       }
+       else if (User.IsInRole("ADMIN"))
+       {
+        <a asp-controller="Admin" asp-action="Index">Main</a>
+       }
     </div>
     <a class="item">
         2
