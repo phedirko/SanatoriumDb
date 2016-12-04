@@ -1,5 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model Sanatorium.Models.AdminViewModels.ManageAdminsViewModel
+<br>
+<br>
+<br>
+@foreach (var admins in Model.Admins)
+{
+    <h1>@admins.Id</h1>
+    <h2>@admins.UserName</h2>
+}
+@foreach (var notAdmins in Model.NotAdmins)
+{
+    <h1>@notAdmins.Id</h1>
+    <h2>@notAdmins.UserName</h2>
 }

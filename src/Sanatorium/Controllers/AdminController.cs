@@ -8,6 +8,7 @@ using Sanatorium.Models.AdminViewModels;
 using System.Linq;
 using System;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Sanatorium.Controllers
 {
@@ -167,14 +168,22 @@ namespace Sanatorium.Controllers
             await Db.SaveChangesAsync();
         }
 
-        public IActionResult ManageAdmins()
+        public async Task<IActionResult> ManageAdmins()
         {
-            return View();
+            List<ApplicationUser> admins = await Db.Users.Where(x=>x.Roles.Any(y=>y.RoleId=="1"&&y.UserId==x.Id)).ToListAsync();
+            List<ApplicationUser> notAdmins =
+                await Db.Users.Where(x=>x.Roles.All(r=>r.RoleId!="1")).ToListAsync();
+            ManageAdminsViewModel model = new ManageAdminsViewModel(admins, notAdmins); 
+            return View(model);
         }
 
-        public IActionResult ManageNurses()
+        public async Task<IActionResult> ManageNurses()
         {
-            return View();
+            List<ApplicationUser> nurses = await Db.Users.Where(x => x.Roles.Any(y => y.RoleId == "2" && y.UserId == x.Id)).ToListAsync();
+            List<ApplicationUser> notNurses =
+                await Db.Users.Where(x => x.Roles.All(r => r.RoleId != "1")).ToListAsync();
+            ManageNursesViewModel model = new ManageNursesViewModel(nurses, notNurses);
+            return View(model);
         }
     }
 }
