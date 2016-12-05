@@ -10,18 +10,21 @@ using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Identity;
 
 namespace Sanatorium.Controllers
 {
     [Authorize(Roles = "ADMIN")]
     public class AdminController : Controller
     {
-       
+        public readonly UserManager<ApplicationUser> UserManager;
         public readonly ApplicationDbContext Db;
 
-        public AdminController(ApplicationDbContext db)
+        public AdminController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         {
             Db = db;
+
+            UserManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -219,6 +222,20 @@ namespace Sanatorium.Controllers
             }
 
             return PartialView("~/Views/Admin/queryResult.cshtml",result);
+        }
+        [HttpPost]
+        public async Task SetUserToRole(string userId,string role)
+        {
+            ApplicationUser user = await Db.Users.SingleAsync(u => u.Id == userId);
+            await UserManager.AddToRoleAsync(user, role);
+            await Db.SaveChangesAsync();
+        }
+        [HttpPost]
+        public async Task RemoveFromRole(string userId, string role)
+        {
+            ApplicationUser user = await Db.Users.SingleAsync(u => u.Id == userId);
+            await UserManager.RemoveFromRoleAsync(user, role);
+            await Db.SaveChangesAsync();
         }
     }
 }

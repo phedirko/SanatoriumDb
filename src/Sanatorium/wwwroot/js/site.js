@@ -671,3 +671,6 @@ $("#createQuery").click(function () {
         }
     });
 });
+$("#setAsAdminBtn").click(function (e) {
+    console.log(e);
+});
