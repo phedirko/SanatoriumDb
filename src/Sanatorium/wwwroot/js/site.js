@@ -641,19 +641,14 @@ $("#searchPatientsByName")
     });
 $("#importBtn")
     .click(function() {
-
-        console.log(importFile.FullName);
         $.ajax({
             type: "POST",
             data: importFile,
             url: "../Admin/ImportPatientFromFile/",
-            //url: "../Admin/ImportPatientFromFile?FullName="+importFile.FullName+"&Days="+importFile.Days+"&Gender="+importFile.Gender,
             success: function(dataa) {
                 window.location.reload();
             }
-
         });
-
     });
 $(document)
     .on('change',
@@ -665,7 +660,6 @@ $(document)
                 importFile = jsonObj;
             };
             reader.readAsText(event.target.files[0]);
-            //console.log(reader.readAsText(event.target.files[0]));
         });
 $("#createQuery").click(function () {
     $.ajax({
@@ -673,34 +667,7 @@ $("#createQuery").click(function () {
         data: {q:$("#query").val()},
         url: "../Admin/Query/",
         success: function (result) {
-            $("#sqlResult").html("");
-            for (var i = 0 ; i < result.length; i++) {
-                //if (i == 0) {
-                //    $("#sqlResult").append('<table class="ui single line table"> <thead> <tr>');
-                //}
-                for (j = 0; j < result[i].length; j++) {
-                    console.log(result[i][j]);
-                    //if (i == 0 && j == result[i].length - 1) {
-                        //        $("#sqlResult").append('<th>' + result[i][j] + "</th></tr></thead>");
-                        //    }
-                        //    else if (i == 0) {
-                        //        $("#sqlResult").append('<th>' + result[i][j] + "</th>");
-                        //    }
-                        //    else if(j==0){
-                        //        $("#sqlResult").append('<tr><td>' + result[i][j] + "</td>");
-                        //    }
-                        //    else if (j == result[i].length - 1) {
-                        //        $("#sqlResult").append('<td>' + result[i][j] + "</td><tr>");
-                        //    }
-                        //    else {
-                        //        $("#sqlResult").append('<td>' + result[i][j] + "</td>");
-                        //    }
-                        //}
-                        //if (i == result.length - 1) {
-                        //    $("#sqlResult").append('</tbody></table>');
-                        //}
-                    }
-                }
+            $("#sqlResult").html(result);          
         }
     });
 });

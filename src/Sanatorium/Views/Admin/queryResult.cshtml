@@ -1,0 +1,35 @@
+﻿@model List<List<string>>
+@{ 
+
+}
+@{
+
+}
+@if (Model.Count != 0)
+{
+    <div class="ui grid">
+        <div class="sixteen wide column">
+            <table class="ui single line table fluid">
+                <thead>
+                    <tr>
+                        @for (int i = 0; i < Model[0].Count; i++)
+                        {
+                            <td>@Model[0][i]</td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int row = 1; row < Model.Count; row++)
+                {
+                        <tr>
+                            @for (int column = 0; column < Model[row].Count; column++)
+                            {
+                                <td>@Model[row][column]</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

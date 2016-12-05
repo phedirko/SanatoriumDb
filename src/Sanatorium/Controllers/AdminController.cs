@@ -191,7 +191,7 @@ namespace Sanatorium.Controllers
         {
             return View();
         }
-        public JsonResult Query(string q)
+        public PartialViewResult Query(string q)
         {
             List<List<string>> result = new List<List<string>>();
             using (SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb; Database = aspnet-Sanatorium-be834578-74f8-4422-bea0-8de2861221f9;Trusted_Connection = True;MultipleActiveResultSets=true"))
@@ -218,7 +218,7 @@ namespace Sanatorium.Controllers
                 }
             }
 
-            return Json(result);
+            return PartialView("~/Views/Admin/queryResult.cshtml",result);
         }
     }
 }
