@@ -2,13 +2,60 @@
 <br>
 <br>
 <br>
-@foreach (var admins in Model.Admins)
-{
-    <h1>@admins.Id</h1>
-    <h2>@admins.UserName</h2>
+<div class="ui grid">
+    <div class="eight wide column">
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Admins
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+              @foreach (var admins in Model.Admins)
+              {
+
+                        <tr>
+                  <td>@admins.UserName</td>
+                 
+                  <td class="collapsing">
+@if (admins.UserName != User.Identity.Name)
+                {
+                      <button class="basic ui orange button">remove from role</button>
 }
-@foreach (var notAdmins in Model.NotAdmins)
-{
-    <h1>@notAdmins.Id</h1>
-    <h2>@notAdmins.UserName</h2>
+else {
+                      <button class="basic ui orange button disabled">You</button>
 }
+                            </td>
+                        </tr>
+
+              }
+            </tbody>
+        </table>
+    </div>
+    <div class="eight wide column">
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Other Users
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var notAdmins in Model.NotAdmins)
+                {
+                        <tr>
+                            <td>@notAdmins.UserName</td>
+
+                            <td class="collapsing">
+                                <button class="basic ui orange button">Set As Admin</button>
+                            </td>
+                        </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -9,6 +9,7 @@ using System.Linq;
 using System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Data.SqlClient;
 
 namespace Sanatorium.Controllers
 {
@@ -184,6 +185,40 @@ namespace Sanatorium.Controllers
                 await Db.Users.Where(x => x.Roles.All(r => r.RoleId != "1")).ToListAsync();
             ManageNursesViewModel model = new ManageNursesViewModel(nurses, notNurses);
             return View(model);
+        }
+
+        public IActionResult Sql()
+        {
+            return View();
+        }
+        public JsonResult Query(string q)
+        {
+            List<List<string>> result = new List<List<string>>();
+            using (SqlConnection connection = new SqlConnection("Server=(localdb)\\mssqllocaldb; Database = aspnet-Sanatorium-be834578-74f8-4422-bea0-8de2861221f9;Trusted_Connection = True;MultipleActiveResultSets=true"))
+            {
+                string queryString = q;
+                SqlCommand command = new SqlCommand(queryString, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+
+                
+                if (reader != null)
+                {
+                    result.Add(new List<string>());
+                    for (int i = 0; i < reader.FieldCount; ++i)
+                        result[0].Add(reader.GetName(i));
+                    int j = 1;
+                    while (reader.Read())
+                    {
+                        result.Add(new List<string>());
+                        for (int i = 0; i < reader.FieldCount; ++i)
+                            result[j].Add(reader[i].ToString());
+                        ++j;
+                    }
+                }
+            }
+
+            return Json(result);
         }
     }
 }
