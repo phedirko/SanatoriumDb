@@ -18,13 +18,17 @@ namespace Sanatorium.Controllers
     public class AdminController : Controller
     {
         public readonly UserManager<ApplicationUser> UserManager;
+
+        public readonly RoleManager<IdentityRole> RoleManager;
         public readonly ApplicationDbContext Db;
 
-        public AdminController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
+        public AdminController(ApplicationDbContext db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             Db = db;
 
             UserManager = userManager;
+
+            RoleManager = roleManager;
         }
 
         public async Task<IActionResult> Index()
@@ -183,9 +187,8 @@ namespace Sanatorium.Controllers
 
         public async Task<IActionResult> ManageNurses()
         {
-            List<ApplicationUser> nurses = await Db.Users.Where(x => x.Roles.Any(y => y.RoleId == "2" && y.UserId == x.Id)).ToListAsync();
-            List<ApplicationUser> notNurses =
-                await Db.Users.Where(x => x.Roles.All(r => r.RoleId != "1")).ToListAsync();
+            List<ApplicationUser> nurses = (List<ApplicationUser>)await UserManager.GetUsersInRoleAsync("NURSE");
+            List<ApplicationUser> notNurses =await Db.Users.Where(x => !nurses.Contains(x)).ToListAsync();
             ManageNursesViewModel model = new ManageNursesViewModel(nurses, notNurses);
             return View(model);
         }
@@ -236,6 +239,11 @@ namespace Sanatorium.Controllers
             ApplicationUser user = await Db.Users.SingleAsync(u => u.Id == userId);
             await UserManager.RemoveFromRoleAsync(user, role);
             await Db.SaveChangesAsync();
+        }
+
+        public async Task<bool> UserIsInRole (ApplicationUser user,string role)
+        {
+            return await  UserManager.IsInRoleAsync(user, role);
         }
     }
 }

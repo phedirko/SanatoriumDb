@@ -4,3 +4,62 @@
 *@
 @{
 }
+<br>
+<br>
+<br>
+<br />
+<div class="ui grid">
+    <h3>Manage Nurses</h3>
+</div>
+<div class="ui grid">
+    <div class="eight wide column">
+        
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Admins
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var nurse in Model.Nurses)
+                {
+
+                    <tr>
+                        <td>@nurse.UserName</td>
+
+                        <td class="collapsing">
+                                <button class="basic ui orange button fluid removeUserFromRole" user-id="@nurse.Id" user-role="NURSE">remove from role</button>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="eight wide column">
+        <table class="ui celled striped table">
+            <thead>
+                <tr>
+                    <th colspan="2">
+                        Other Users
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var notNurses in Model.NotNurses)
+                {
+                    <tr>
+                        <td>@notNurses.UserName</td>
+
+                        <td class="collapsing">
+                            <button class="basic ui orange button setRoleBtn" user-id="@notNurses.Id" user-role="NURSE">Set As Nurse</button>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

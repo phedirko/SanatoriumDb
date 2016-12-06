@@ -2,6 +2,10 @@
 <br>
 <br>
 <br>
+<br />
+<div class="ui grid">
+    <h3>Manage Admins</h3>
+</div>
 <div class="ui grid">
     <div class="eight wide column">
         <table class="ui celled striped table">
@@ -22,10 +26,10 @@
                   <td class="collapsing">
 @if (admins.UserName != User.Identity.Name)
                 {
-                      <button class="basic ui orange button">remove from role</button>
+                      <button class="basic ui orange button fluid removeUserFromRole" user-id="@admins.Id" user-role="ADMIN">remove from role</button>
 }
 else {
-                      <button class="basic ui orange button disabled">You</button>
+                      <button class="basic ui orange button disabled fluid">You</button>
 }
                             </td>
                         </tr>
@@ -50,7 +54,7 @@ else {
                             <td>@notAdmins.UserName</td>
 
                             <td class="collapsing">
-                                <button class="basic ui orange button setAsAdminBtn" user-id="@notAdmins.Id">Set As Admin</button>
+                                <button class="basic ui orange button setRoleBtn" user-id="@notAdmins.Id" user-role="ADMIN">Set As Admin</button>
                             </td>
                         </tr>
                     

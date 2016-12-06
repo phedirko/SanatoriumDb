@@ -671,6 +671,23 @@ $("#createQuery").click(function () {
         }
     });
 });
-$("#setAsAdminBtn").click(function (e) {
-    console.log(e);
+$(".setRoleBtn").click(function (e) {
+    $.ajax({
+        type: "POST",
+        data: { userId: e.currentTarget.attributes["user-id"].value, role: e.currentTarget.attributes["user-role"].value },
+        url: "../Admin/SetUserToRole/",
+        success: function () {
+            window.location.reload();
+        }
+    })
+});
+$(".removeUserFromRole").click(function (e) {
+    $.ajax({
+        type: "POST",
+        data: { userId: e.currentTarget.attributes["user-id"].value, role: e.currentTarget.attributes["user-role"].value },
+        url: "../Admin/RemoveFromRole/",
+        success: function () {
+            window.location.reload();
+        }
+    })
 });
