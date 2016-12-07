@@ -2,11 +2,58 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<br /><br /><br />
+<br/><br/><br/>
 <div class="ui grid">
-    <div class="eight wide column" id="updatesRooms"><h2>Rooms log</h2></div>
-    <div class="eight wide column" id="updatesProcedures"><h2>Procedures log</h2></div>
+    <div class="ten wide column">
+        <img class="ui fluid image rounded" src="~/images/index.png">
+    </div>
+    <div class="six wide column">
+        <br/>
+        <div class="ui grid">
+
+            <div class="ui statistics">
+                <div class="statistic violet">
+                    <div class="value">
+                        <i class="hotel icon" id="totalRooms"></i>
+                    </div>
+                    <div class="label">
+                        Rooms
+                    </div>
+                </div>
+
+                <div class="green statistic">
+                    <div class="label">
+                        Average Room Price
+                    </div>
+                    <div class="value" id="averagePrice">
+
+                    </div>
+                </div>
+                <div class="statistic teal">
+                    <div class="value">
+                        <i class="smile icon" id="totalProcedures"></i>
+                    </div>
+                    <div class="label">
+                        Procedures
+                    </div>
+                </div>
+                <div class="green statistic">
+                    <div class="label">
+                        Average Procedure Price
+                    </div>
+                    <div class="value" id="averageProcedurePrice">
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui bottom grid">
+            <button class="ui basic button fluid" id="roomsPrices">Download Rooms Price List</button>
+            <br />
+            <button class="ui basic button fluid" id="proceduresPrices">Download Procedures Price List</button>
+        </div>
+    </div>
 </div>
 @section scripts{
-<script src="~/js/homeIndex.js"></script>
+    <script src="~/js/homeIndex.js"></script>
 }

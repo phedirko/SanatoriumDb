@@ -46,6 +46,24 @@ namespace Sanatorium.Controllers
             return Json(priceList);
         }
 
+        [HttpGet]
+        public async Task<JsonResult> GetRoomsInfo()
+        {
+            var averagePrice = await Db.Rooms.AverageAsync(x => x.DailyPrice);
+            var totalRooms = await Db.Rooms.CountAsync();
+            var totalProcedures = await Db.Procedures.CountAsync();
+            var averageProcPrice = await Db.Procedures.AverageAsync(x => x.Price);
+            return
+                Json(
+                    new
+                    {
+                        average = averagePrice,
+                        total = totalRooms,
+                        totalProc = totalProcedures,
+                        averageProc = averageProcPrice
+                    });
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
